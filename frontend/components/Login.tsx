@@ -1,25 +1,28 @@
-import { Input } from "semantic-ui-react"
-import * as yup from "yup"
-import { Formik } from "formik"
-import Link from "next/link"
-import { FormHelper } from "./FormHelper"
+import { Input } from "semantic-ui-react";
+import * as yup from "yup";
+import { Formik } from "formik";
+import Link from "next/link";
+import { FormHelper } from "./FormHelper";
 
 export function Login() {
   return (
-    <>
-      <div className="ui center aligned middle aligned grid" style={{ height: "100vh" }}>
+    <div>
+      <div
+        className="ui center aligned middle aligned grid"
+        style={{ height: "100vh" }}
+      >
         <div className="column" style={{ maxWidth: "450px" }}>
           <h2 className="ui center aligned header">Login</h2>
           <LoginForm />
-          <div className="ui message">
+          <div className="ui basic segment">
             <Link href="/cadastrar">
               <a>Cadastrar</a>
             </Link>
           </div>
         </div>
       </div>
-    </>
-  )
+    </div>
+  );
 }
 
 const formSchema = yup.object({
@@ -31,7 +34,7 @@ const formSchema = yup.object({
     .string()
     .min(3)
     .required()
-})
+});
 
 function LoginForm() {
   return (
@@ -43,7 +46,7 @@ function LoginForm() {
       onSubmit={value => {}}
       validationSchema={formSchema}
       render={ctrl => {
-        const h = new FormHelper(ctrl)
+        const h = new FormHelper(ctrl);
         return (
           <form className="ui large form" onSubmit={ctrl.handleSubmit}>
             <div className="ui stacked segment">
@@ -52,7 +55,7 @@ function LoginForm() {
                   <Input
                     type="text"
                     placeholder="Usuário"
-                    {...h.bind("username")}
+                    {...h.bindInput("username")}
                     iconPosition="left"
                     icon="user"
                   />
@@ -62,7 +65,7 @@ function LoginForm() {
                 <Input
                   type="password"
                   placeholder="Senha"
-                  {...h.bind("password")}
+                  {...h.bindInput("password")}
                   iconPosition="left"
                   icon="lock"
                 />
@@ -72,8 +75,8 @@ function LoginForm() {
               </button>
             </div>
           </form>
-        )
+        );
       }}
     />
-  )
+  );
 }

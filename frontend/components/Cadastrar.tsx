@@ -1,25 +1,28 @@
-import Link from "next/link"
-import * as yup from "yup"
-import { Formik } from "formik"
-import { FormHelper } from "./FormHelper"
-import { Input } from "semantic-ui-react"
+import Link from "next/link";
+import * as yup from "yup";
+import { Formik } from "formik";
+import { FormHelper } from "./FormHelper";
+import { Input, Segment, Form } from "semantic-ui-react";
 
 export function Cadastrar() {
   return (
     <>
-      <div className="ui center aligned middle aligned grid" style={{ height: "100vh" }}>
+      <div
+        className="ui center aligned middle aligned grid"
+        style={{ height: "100vh" }}
+      >
         <div className="column" style={{ maxWidth: "450px" }}>
-          <h2 className="ui center aligned header">Login</h2>
+          <h2 className="ui center aligned header">Cadastrar</h2>
           <CadastroForm />
-          <div className="ui message">
-            <Link href="/cadastrar">
-              <a>Cadastrar</a>
+          <Segment basic>
+            <Link href="/">
+              <a>Enviar</a>
             </Link>
-          </div>
+          </Segment>
         </div>
       </div>
     </>
-  )
+  );
 }
 
 const formSchema = yup.object({
@@ -33,9 +36,8 @@ const formSchema = yup.object({
     .required(),
   repeatPassword: yup
     .string()
-    .min(3)
-    .required()
-})
+    .oneOf([yup.ref("password"), null], "Passwords must match")
+});
 
 function CadastroForm() {
   return (
@@ -48,34 +50,43 @@ function CadastroForm() {
       validationSchema={formSchema}
       onSubmit={value => {}}
       render={ctrl => {
-        const h = new FormHelper(ctrl)
+        const h = new FormHelper(ctrl);
         return (
           <form className="ui large form" onSubmit={ctrl.handleSubmit}>
             <div className="ui stacked segment">
-              <div className="field">
-                <div className="ui fluid left icon input">
-                  <Input
-                    type="text"
-                    placeholder="Usuário"
-                    {...h.bind("username")}
-                    iconPosition="left"
-                    icon="user"
-                  />
-                </div>
-              </div>
-              <div className="field">
-                <Input type="password" placeholder="Senha" {...h.bind("password")} />
-              </div>
-              <div className="field">
-                <Input type="password" placeholder="Repetir senha" {...h.bind("repeatPassword")} />
-              </div>
+              <Form.Field {...h.bindField("username")}>
+                <Input
+                  type="text"
+                  placeholder="Usuário"
+                  {...h.bindInput("username")}
+                  iconPosition="left"
+                  icon="user"
+                />
+                {h.errorMessage("username")}
+              </Form.Field>
+              <Form.Field {...h.bindField("password")}>
+                <Input
+                  type="password"
+                  placeholder="Senha"
+                  {...h.bindInput("password")}
+                />
+                {h.errorMessage("password")}
+              </Form.Field>
+              <Form.Field {...h.bindField("repeatPassword")}>
+                <Input
+                  type="password"
+                  placeholder="Repetir senha"
+                  {...h.bindInput("repeatPassword")}
+                />
+                {h.errorMessage("repeatPassword")}
+              </Form.Field>
               <button className="ui large fluid button" type="submit">
-                Login
+                Concluído
               </button>
             </div>
           </form>
-        )
+        );
       }}
     />
-  )
+  );
 }
