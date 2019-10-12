@@ -9,23 +9,23 @@ import javax.persistence.*;
 @Entity
 public class Log {
 
-  private @Id
-  @GeneratedValue
-  Long id;
+    @Id
+    @GeneratedValue
+    private Long id;
 
-  @Enumerated(EnumType.STRING)
-  private LogLevel logLevel;
+    @Enumerated(EnumType.STRING)
+    private LogLevel logLevel;
 
-  private String code;
-  private String message;
+    private String code;
+    private String message;
 
-  Log() {
-  }
+    Log() {
+    }
 
-  public Log(LogLevel logLevel, String code, String message) {
-    this.logLevel = logLevel;
-    this.code = code;
-    this.message = message;
-  }
+    public Log(LogLevel logLevel, String code, String message) {
+        this.logLevel = logLevel;
+        this.code = code;
+        this.message = message;
+    }
 
 }

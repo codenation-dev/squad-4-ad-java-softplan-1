@@ -12,12 +12,12 @@ import org.springframework.context.annotation.Configuration;
 @Slf4j
 class LoadDatabase {
 
-  @Bean
-  CommandLineRunner initDatabase(LogRepository repository) {
-    return args -> {
-      repository.save(new Log(LogLevel.DEBUG, "test", "test message"));
-      repository.save(new Log(LogLevel.INFO, "test", "message2"));
-    };
-  }
+    @Bean
+    CommandLineRunner initDatabase(LogRepository repository) {
+        return args -> {
+            repository.save(new Log(LogLevel.DEBUG, "test", "test message"));
+            repository.save(new Log(LogLevel.INFO, "test", "message2"));
+        };
+    }
 
 }
