@@ -1,28 +1,25 @@
-import Link from "next/link";
-import * as yup from "yup";
-import { Formik } from "formik";
-import { FormHelper } from "./FormHelper";
-import { Input, Segment, Form } from "semantic-ui-react";
+import Link from "next/link"
+import * as yup from "yup"
+import { Formik } from "formik"
+import { FormHelper } from "./_common/FormHelper"
+import { Input, Segment, Form } from "semantic-ui-react"
 
-export function Cadastrar() {
+export function Signup() {
   return (
     <>
-      <div
-        className="ui center aligned middle aligned grid"
-        style={{ height: "100vh" }}
-      >
+      <div className="ui center aligned middle aligned grid" style={{ height: "100vh" }}>
         <div className="column" style={{ maxWidth: "450px" }}>
           <h2 className="ui center aligned header">Cadastrar</h2>
-          <CadastroForm />
-          <Segment basic>
+          <SignupForm />
+          {/* <Segment basic>
             <Link href="/">
               <a>Enviar</a>
             </Link>
-          </Segment>
+          </Segment> */}
         </div>
       </div>
     </>
-  );
+  )
 }
 
 const formSchema = yup.object({
@@ -34,12 +31,10 @@ const formSchema = yup.object({
     .string()
     .min(3)
     .required(),
-  repeatPassword: yup
-    .string()
-    .oneOf([yup.ref("password"), null], "Passwords must match")
-});
+  repeatPassword: yup.string().oneOf([yup.ref("password"), null], "Passwords must match")
+})
 
-function CadastroForm() {
+function SignupForm() {
   return (
     <Formik
       initialValues={{
@@ -50,7 +45,7 @@ function CadastroForm() {
       validationSchema={formSchema}
       onSubmit={value => {}}
       render={ctrl => {
-        const h = new FormHelper(ctrl);
+        const h = new FormHelper(ctrl)
         return (
           <form className="ui large form" onSubmit={ctrl.handleSubmit}>
             <div className="ui stacked segment">
@@ -65,11 +60,7 @@ function CadastroForm() {
                 {h.errorMessage("username")}
               </Form.Field>
               <Form.Field {...h.bindField("password")}>
-                <Input
-                  type="password"
-                  placeholder="Senha"
-                  {...h.bindInput("password")}
-                />
+                <Input type="password" placeholder="Senha" {...h.bindInput("password")} />
                 {h.errorMessage("password")}
               </Form.Field>
               <Form.Field {...h.bindField("repeatPassword")}>
@@ -85,8 +76,8 @@ function CadastroForm() {
               </button>
             </div>
           </form>
-        );
+        )
       }}
     />
-  );
+  )
 }
