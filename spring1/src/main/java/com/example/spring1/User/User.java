@@ -1,12 +1,12 @@
 package com.example.spring1.User;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.ManyToMany;
+import javax.persistence.*;
 
 import com.example.spring1.Client.Client;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import java.util.List;
 
@@ -23,6 +23,7 @@ public class User {
   private String passwordHash;
 
   @ManyToMany
+  @JoinTable(joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "client_id"))
   private List<Client> clients;
-
 }

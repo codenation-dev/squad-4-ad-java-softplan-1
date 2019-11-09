@@ -21,7 +21,7 @@ public class Client {
 
     private String apiToken;
 
-    @ManyToMany
+    @ManyToMany(mappedBy = "clients")
     private List<User> users;
 
 }
