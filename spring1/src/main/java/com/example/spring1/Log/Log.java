@@ -3,7 +3,9 @@ package com.example.spring1.Log;
 import lombok.Data;
 
 import javax.persistence.*;
+import javax.persistence.Index;
 
+import com.example.spring1.User.User;
 
 @Data
 @Entity
@@ -13,19 +15,16 @@ public class Log {
     @GeneratedValue
     private Long id;
 
+    // fixme index this
     @Enumerated(EnumType.STRING)
     private LogLevel logLevel;
-
+    // fixme: index this
     private String code;
+    // fixme: index this
     private String message;
+    // fixme: index this
+    private String details;
 
-    Log() {
-    }
-
-    public Log(LogLevel logLevel, String code, String message) {
-        this.logLevel = logLevel;
-        this.code = code;
-        this.message = message;
-    }
-
+    @ManyToOne
+    private User user;
 }
