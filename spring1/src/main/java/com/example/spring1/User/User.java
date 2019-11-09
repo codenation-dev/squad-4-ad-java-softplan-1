@@ -1,13 +1,9 @@
 package com.example.spring1.User;
 
-import javax.persistence.*;
-
 import com.example.spring1.Client.Client;
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
 
+import javax.persistence.*;
 import java.util.List;
 
 @Data
@@ -20,7 +16,7 @@ public class User {
 
   private String username;
   private String displayName;
-  private String passwordHash;
+  private String password;
 
   @ManyToMany
   @JoinTable(joinColumns = @JoinColumn(name = "user_id"),

@@ -2,13 +2,9 @@ package com.example.spring1.Log;
 
 import com.example.spring1.Client.Client;
 import lombok.Data;
-
-import javax.persistence.*;
-import javax.persistence.Index;
-
-import com.example.spring1.User.User;
 import org.springframework.data.annotation.CreatedDate;
 
+import javax.persistence.*;
 import java.util.Date;
 
 @Data
