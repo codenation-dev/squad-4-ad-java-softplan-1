@@ -1,12 +1,16 @@
 package com.example.spring1.Client;
 
 import com.example.spring1.User.User;
+import lombok.Data;
 
+import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import java.util.List;
 
+@Data
+@Entity
 public class Client {
 
     @Id

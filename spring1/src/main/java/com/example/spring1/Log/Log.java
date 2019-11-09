@@ -1,11 +1,15 @@
 package com.example.spring1.Log;
 
+import com.example.spring1.Client.Client;
 import lombok.Data;
 
 import javax.persistence.*;
 import javax.persistence.Index;
 
 import com.example.spring1.User.User;
+import org.springframework.data.annotation.CreatedDate;
+
+import java.util.Date;
 
 @Data
 @Entity
@@ -25,6 +29,9 @@ public class Log {
     // fixme: index this
     private String details;
 
+    @CreatedDate
+    Date createdAt;
+
     @ManyToOne
-    private User user;
+    private Client client;
 }
