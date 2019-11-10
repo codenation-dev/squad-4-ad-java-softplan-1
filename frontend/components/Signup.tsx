@@ -11,11 +11,6 @@ export function Signup() {
         <div className="column" style={{ maxWidth: "450px" }}>
           <h2 className="ui center aligned header">Cadastrar</h2>
           <SignupForm />
-          {/* <Segment basic>
-            <Link href="/">
-              <a>Enviar</a>
-            </Link>
-          </Segment> */}
         </div>
       </div>
     </>
