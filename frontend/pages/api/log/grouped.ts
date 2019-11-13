@@ -18,13 +18,13 @@ export default handler([
         },
         {
           id: 2,
-          clientName: "client1",
-          code: "code1",
+          clientName: "client2",
+          code: "code2",
           count: 2,
           createdAt: new Date().toISOString(),
-          details: "some\ndetails",
-          logLevel: "error",
-          message: "the title"
+          details: "other\ndetails",
+          logLevel: "info",
+          message: "another title"
         }
       ] as LogCount[]
     }

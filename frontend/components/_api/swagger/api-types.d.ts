@@ -13,3 +13,14 @@ export interface LogCount {
   clientName: string
   count: number
 }
+
+export interface Log {
+  countId?
+  id?
+  logLevel
+  code
+  message
+  details
+  createdAt
+  clientName: string
+}

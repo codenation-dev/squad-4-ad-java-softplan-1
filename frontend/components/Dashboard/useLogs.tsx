@@ -17,6 +17,7 @@ export function useLogs() {
   const [selectedClient, setSelectedClient] = React.useState("*" as string | number)
   const [selectedSort, setSelectedSort] = React.useState("*")
   const [logs, setLogs] = React.useState<LogCount[]>([])
+  const [selectedLog, setSelectedLog] = React.useState<LogCount | null>(null)
   const [filter, setFilter] = React.useState<Filters>({})
   React.useEffect(() => {
     clientList({})
@@ -39,7 +40,9 @@ export function useLogs() {
     setSelectedSort,
     logs,
     setLogs,
-    filter
+    filter,
+    selectedLog,
+    setSelectedLog
   }
 }
 

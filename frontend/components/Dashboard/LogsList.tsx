@@ -4,6 +4,7 @@ import { Segment, Label } from "semantic-ui-react"
 import immer from "immer"
 import { LogCount } from "../_api/swagger/api-types"
 import dayjs from "dayjs"
+import { LogLevelLabel } from "../_common/LogLevelLabel"
 
 export function LogsList(i: { data: Model }) {
   const { data } = i
@@ -31,9 +32,20 @@ export function LogsList(i: { data: Model }) {
     })
     data.setLogs(updated)
   }, [allSelected, setAllSelected, logs, data.setLogs])
+
+  const setDetail = React.useCallback(
+    (log: LogCount | null) => ev => {
+      data.setSelectedLog(log)
+    },
+    [data]
+  )
+
   return (
     <div className="list">
       <style jsx global>{`
+        .list {
+          flex-grow: 3;
+        }
         .ui.segment {
           display flex;
           flex-direction: row;
@@ -49,6 +61,12 @@ export function LogsList(i: { data: Model }) {
         .count {
           min-width: 50px;
         }
+        .line {
+          transition: background-color 0.3s ease;
+        }
+        .line:hover {
+          background-color: #f3f3f3;
+        }
       `}</style>
       <Segment.Group>
         <Segment>
@@ -60,7 +78,7 @@ export function LogsList(i: { data: Model }) {
           <div className="count">Ocorrências</div>
         </Segment>
         {logs.map((log, idx) => (
-          <Segment key={log.id}>
+          <Segment key={log.id} onClick={setDetail(log)} className="line">
             <div className="selector">
               <input
                 type="checkbox"
@@ -69,7 +87,7 @@ export function LogsList(i: { data: Model }) {
               />
             </div>
             <div className="log-level">
-              <Label color={logLevelColors[log.logLevel || ""]}>{log.logLevel}</Label>
+              <LogLevelLabel level={log.logLevel} />
             </div>
             <div className="info">
               <LogInfoCell log={log} />
@@ -90,13 +108,4 @@ function LogInfoCell(i: { log: LogCount }) {
       <div>{dayjs(i.log.createdAt).format("DD/MM/YY hh:mm:ss")}</div>
     </>
   )
-}
-
-const logLevelColors = {
-  ERROR: "red",
-  WARN: "yellow",
-  INFO: "blue",
-  DEBUG: "gray",
-  TRACE: "white",
-  "": "white"
 }
