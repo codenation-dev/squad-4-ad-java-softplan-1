@@ -1,0 +1,30 @@
+spring:
+  datasource:
+    url: jdbc:h2:mem:test
+    driverClassName: org.h2.Driver
+    username: sa
+    password: ''
+  
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect
+    show-sql: true
+    hibernate:
+      ddl-auto: create-drop
+
+custom:
+  jwt-secret: 1234
+  b64-secret: YWZlNTU3NjRmMDk1NDJjYTA3ODFkYTFiYTA3ODU2ODllZTI4MWFmN2M4YjVhNGQ4NWZhN2ZhOWYxNWQzYjQ2OGM4ZWU3MWNjMjU0MmE1YTI5YWNiNDNjNjVmZDJhM2Y1ODIzNmQ3ZWE2MTc1NmQ4OWFhM2I1MWJiYTEwYjVhNDY=
+  token-validity-in-seconds: 86400
+
+
+## old
+#server.port=9090
+#spring.jpa.database=POSTGRESQL
+#spring.datasource.platform=postgres
+#spring.datasource.url=jdbc:postgresql://localhost:5432/spring1
+#spring.datasource.username=willian
+#spring.datasource.password=123456
+#spring.jpa.show-sql=true
+#spring.jpa.generate-ddl=true
+#spring.jpa.hibernate.ddl-auto=create-drop
+#spring.jpa.properties.hibernate.jdbc.lob.non_contextual_creation=true
