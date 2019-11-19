@@ -1,4 +1,4 @@
-package com.example.spring1._Config;
+package com.example.spring1._Config.Security;
 
 import java.nio.charset.StandardCharsets;
 import java.security.Key;
