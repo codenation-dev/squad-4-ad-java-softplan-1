@@ -6,6 +6,9 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 import java.util.Collection;
 import java.util.List;
 
@@ -17,39 +20,25 @@ public class User implements UserDetails {
   @GeneratedValue
   private Long id;
 
+  @Size(min = 3, max = 30)
+  @Column(unique = true)
+  @NotBlank
   private String username;
+
+  @NotBlank
+  @Email
+  @Column(unique = true)
+  private String email;
+
+  @NotBlank
+  @Size(min = 3, max = 30)
   private String displayName;
+
+  @NotBlank
   private String password;
 
   @ManyToMany
-  @JoinTable(joinColumns = @JoinColumn(name = "user_id"),
-            inverseJoinColumns = @JoinColumn(name = "client_id"))
+  @JoinTable(joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "client_id"))
   private List<Client> clients;
 
-  // UserDetails impl
-
-  @Override
-  public Collection<? extends GrantedAuthority> getAuthorities() {
-    return null;
-  }
-
-  @Override
-  public boolean isAccountNonExpired() {
-    return false;
-  }
-
-  @Override
-  public boolean isAccountNonLocked() {
-    return true;
-  }
-
-  @Override
-  public boolean isCredentialsNonExpired() {
-    return true;
-  }
-
-  @Override
-  public boolean isEnabled() {
-    return true;
-  }
 }
