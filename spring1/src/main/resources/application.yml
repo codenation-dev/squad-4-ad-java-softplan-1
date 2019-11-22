@@ -3,20 +3,20 @@ spring:
     url: jdbc:h2:mem:test
     driverClassName: org.h2.Driver
     username: sa
-    password: ''
-  
+    password: ""
+
   jpa:
     database-platform: org.hibernate.dialect.H2Dialect
     show-sql: true
     hibernate:
       ddl-auto: create-drop
 
-custom:
-  jwt-secret: 1234
-  b64-secret: YWZlNTU3NjRmMDk1NDJjYTA3ODFkYTFiYTA3ODU2ODllZTI4MWFmN2M4YjVhNGQ4NWZhN2ZhOWYxNWQzYjQ2OGM4ZWU3MWNjMjU0MmE1YTI5YWNiNDNjNjVmZDJhM2Y1ODIzNmQ3ZWE2MTc1NmQ4OWFhM2I1MWJiYTEwYjVhNDY=
-  token-validity-in-seconds: 86400
-
-
+security:
+  oauth2:
+    client:
+      scope: password
+      client-id: clientid
+      client-secret: 123456
 ## old
 #server.port=9090
 #spring.jpa.database=POSTGRESQL
