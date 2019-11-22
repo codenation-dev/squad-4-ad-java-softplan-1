@@ -2,7 +2,6 @@ package com.example.spring1._Config;
 
 import com.example.spring1.User.User;
 import com.example.spring1.User.UserRepository;
-import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
