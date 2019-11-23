@@ -1,9 +1,8 @@
 import React from "react"
 import { DropdownItemProps } from "semantic-ui-react"
-import { clientList } from "../_api/swagger/modules/Client"
 import { showToastC } from "../_common/ToastService"
-import { LogCount } from "../_api/swagger/api-types"
-import { listLogsGrouped } from "../_api/swagger/modules/Log"
+import { LogCount } from "../_api/customTypes"
+import { listClientsUsingGET } from "../_api/swagger/modules/ClientController"
 
 interface Filters {
   client?
@@ -20,8 +19,8 @@ export function useLogs() {
   const [selectedLog, setSelectedLog] = React.useState<LogCount | null>(null)
   const [filter, setFilter] = React.useState<Filters>({})
   React.useEffect(() => {
-    clientList({})
-      .then(({ result: clients }) => {
+    listClientsUsingGET({})
+      .then(clients => {
         const dropdownContent = [
           ALL_CLIENTS_OPTION,
           ...clients.map(c => ({ value: c.id, text: c.name, key: c.id }))

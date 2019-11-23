@@ -1,7 +1,7 @@
 import Router from "next/router"
 import React from "react"
 import { showToast } from "./_common/ToastService"
-import { userRequestConfirm } from "./_api/swagger/modules/User"
+// import { userRequestConfirm } from "./_api/swagger/modules/User"
 import { NextPage } from "next"
 
 export const SignupConfirm: NextPage<{ token }> = i => {
@@ -53,10 +53,11 @@ function formLogic(i: { token }) {
       if (pwd1 !== pwd2) {
         throw Error("As senhas não coincidem.")
       }
-      await userRequestConfirm({
-        password: pwd1,
-        token: i.token
-      })
+      // TODO
+      // await userRequestConfirm({
+      //   password: pwd1,
+      //   token: i.token
+      // })
       showToast("success", "Usuário confirmado!")
       Router.push("/")
     } catch (err) {

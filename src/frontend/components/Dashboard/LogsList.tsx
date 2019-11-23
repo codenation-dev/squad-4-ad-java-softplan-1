@@ -2,9 +2,9 @@ import React from "react"
 import { Model } from "./useLogs"
 import { Segment, Label } from "semantic-ui-react"
 import immer from "immer"
-import { LogCount } from "../_api/swagger/api-types"
 import dayjs from "dayjs"
 import { LogLevelLabel } from "../_common/LogLevelLabel"
+import { LogCount } from "../_api/customTypes"
 
 export function LogsList(i: { data: Model }) {
   const { data } = i

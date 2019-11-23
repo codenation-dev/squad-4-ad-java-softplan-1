@@ -6,16 +6,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/user")
+@RequestMapping("/users")
 public class UserController {
-	private final UserRepository userRepository;
+  private final UserRepository userRepository;
 
-	@GetMapping
-	List<User> list() {
-		return userRepository.findAll();
-	}
+  @GetMapping
+  List<User> list() {
+    return userRepository.findAll();
+  }
 
-	public UserController(UserRepository userRepository) {
-		this.userRepository = userRepository;
-	}
+  public UserController(UserRepository userRepository) {
+    this.userRepository = userRepository;
+  }
 }

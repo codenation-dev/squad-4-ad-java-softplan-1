@@ -1,4 +1,4 @@
-import { FormikProps } from "formik";
+import { FormikProps } from "formik"
 export class FormHelper<Values extends {}> {
   constructor(public ctrl: FormikProps<Values>) {}
 
@@ -8,20 +8,21 @@ export class FormHelper<Values extends {}> {
       id: field,
       value: this.ctrl.values[field],
       onChange: ev => this.ctrl.handleChange(ev),
-      onBlur: ev => this.ctrl.handleBlur(ev)
-    };
+      onBlur: ev => this.ctrl.handleBlur(ev),
+      error: (this.ctrl.touched[field] && this.ctrl.errors[field]) || undefined
+    }
   }
 
   bindField(field: keyof Values) {
-    const hasError = Boolean(this.ctrl.errors[field]);
-    console.log(hasError);
+    const hasError = Boolean(this.ctrl.errors[field])
+    console.log(hasError)
     return {
       error: hasError
-    };
-  }
-
-  errorMessage(field: keyof Values) {
-    const error = this.ctrl.errors[field];
-    return error ? <div>{error}</div> : null;
+    }
   }
 }
+
+const errorMessageStyle = {
+  textAlign: "left",
+  color: "red"
+} as const
