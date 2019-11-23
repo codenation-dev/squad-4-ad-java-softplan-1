@@ -23,5 +23,8 @@
 hs_err_pid*
 
 node_modules
-.idea
 target
+
+.classpath
+.factorypath
+*.iml
