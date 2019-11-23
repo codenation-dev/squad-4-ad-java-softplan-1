@@ -6,6 +6,14 @@
   "configurations": [
     {
       "type": "node",
+      "request": "launch",
+      "name": "Swagger",
+      "program": "${workspaceFolder}/build/swagger.js",
+      "skipFiles": ["<node_internals>/**"],
+      "sourceMaps": false
+    },
+    {
+      "type": "node",
       "request": "attach",
       "name": "Attach by Process ID",
       "processId": "${command:PickProcess}"
