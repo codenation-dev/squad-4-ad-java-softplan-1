@@ -35,16 +35,16 @@ export function Detail({ data }: { data: Model }) {
               <LogLevelLabel level={selected.logLevel} />
             </List.Content>
           </List.Item>
-          <List.Item>
+          {/* <List.Item>
             <List.Content>
               <List.Header>Eventos</List.Header>
               <List.Description>{selected.count}</List.Description>
             </List.Content>
-          </List.Item>
+          </List.Item> */}
           <List.Item>
             <List.Content>
               <List.Header>Cliente</List.Header>
-              <List.Description>{selected.clientName}</List.Description>
+              <List.Description>{selected.client?.name}</List.Description>
             </List.Content>
           </List.Item>
         </List>

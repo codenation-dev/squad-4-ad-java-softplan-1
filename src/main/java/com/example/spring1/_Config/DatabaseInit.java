@@ -10,25 +10,33 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class DatabaseInit implements ApplicationRunner {
-	private UserRepository userRepository;
-	private PasswordEncoder passwordEncoder;
+  private UserRepository userRepository;
+  private PasswordEncoder passwordEncoder;
 
-	@Autowired
-	public DatabaseInit(UserRepository userRepository, PasswordEncoder passwordEncoder) {
-		this.userRepository = userRepository;
-		this.passwordEncoder = passwordEncoder;
-	}
+  @Autowired
+  public DatabaseInit(
+    UserRepository userRepository,
+    PasswordEncoder passwordEncoder
+  ) {
+    this.userRepository = userRepository;
+    this.passwordEncoder = passwordEncoder;
+  }
 
-	@Override
-	public void run(ApplicationArguments args) throws Exception {
-		User found = userRepository.getByUsername("adm");
-		if (found == null) {
-			User toCreate = new User();
-			toCreate.setDisplayName("Administrador");
-			toCreate.setEmail("adm@adm.com");
-			toCreate.setUsername("adm");
-			toCreate.setPassword(passwordEncoder.encode("123456"));
-			userRepository.save(toCreate);
-		}
-	}
+  @Override
+  public void run(ApplicationArguments args) throws Exception {
+    User found = userRepository.getByUsername("adm");
+    if (found == null) {
+      User toCreate = new User();
+      toCreate.setDisplayName("Administrador");
+      toCreate.setEmail("adm@adm.com");
+      toCreate.setUsername("adm");
+      toCreate.setPassword(passwordEncoder.encode("123456"));
+
+      // Set<String> roles = new HashSet<>();
+      // roles.add(UserRoles.ROLE_ADMIN.toString());
+      // roles.add(UserRoles.ROLE_USER.toString());
+      // toCreate.setRoles(roles);
+      userRepository.save(toCreate);
+    }
+  }
 }

@@ -4,7 +4,13 @@ import com.example.spring1.Client.Client;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
@@ -16,65 +22,69 @@ import org.springframework.security.core.userdetails.UserDetails;
 @Data
 @Entity
 public class User implements UserDetails {
-	/**
-	 *
-	 */
-	private static final long serialVersionUID = 1859017184358810277L;
+  /**
+   *
+   */
+  private static final long serialVersionUID = 1859017184358810277L;
 
-	@Id
-	@GeneratedValue
-	private Long id;
+  @Id
+  @GeneratedValue
+  private Long id;
 
-	@Size(min = 3, max = 30)
-	@Column(unique = true)
-	@NotBlank
-	private String username;
+  @Size(min = 3, max = 30)
+  @Column(unique = true)
+  @NotBlank
+  private String username;
 
-	@NotBlank
-	@Email
-	@Column(unique = true)
-	private String email;
+  @NotBlank
+  @Email
+  @Column(unique = true)
+  private String email;
 
-	@NotBlank
-	@Size(min = 3, max = 30)
-	private String displayName;
+  @NotBlank
+  @Size(min = 3, max = 30)
+  private String displayName;
 
-	@NotBlank
-	private String password;
+  @NotBlank
+  private String password;
 
-	@ManyToMany
-	@JoinTable(
-		joinColumns = @JoinColumn(name = "user_id"),
-		inverseJoinColumns = @JoinColumn(name = "client_id")
-	)
-	private List<Client> clients;
+  @ManyToMany
+  @JoinTable(
+    joinColumns = @JoinColumn(name = "user_id"),
+    inverseJoinColumns = @JoinColumn(name = "client_id")
+  )
+  private List<Client> clients;
 
-	private String role = "ROLE_USER";
+  // @ElementCollection
+  // private Set<String> roles;
+  @Override
+  public Collection<? extends GrantedAuthority> getAuthorities() {
+    List<GrantedAuthority> list = new ArrayList<>();
 
-	@Override
-	public Collection<? extends GrantedAuthority> getAuthorities() {
-		List<GrantedAuthority> list = new ArrayList<>();
-		list.add(new SimpleGrantedAuthority(role));
-		return list;
-	}
+    // for (String r : roles) {
+    //   list.add(new SimpleGrantedAuthority(r));
+    // }
+    list.add(new SimpleGrantedAuthority("ROLE_ADMIN"));
+    return list;
+  }
 
-	@Override
-	public boolean isAccountNonExpired() {
-		return true;
-	}
+  @Override
+  public boolean isAccountNonExpired() {
+    return true;
+  }
 
-	@Override
-	public boolean isAccountNonLocked() {
-		return true;
-	}
+  @Override
+  public boolean isAccountNonLocked() {
+    return true;
+  }
 
-	@Override
-	public boolean isCredentialsNonExpired() {
-		return true;
-	}
+  @Override
+  public boolean isCredentialsNonExpired() {
+    return true;
+  }
 
-	@Override
-	public boolean isEnabled() {
-		return true;
-	}
+  @Override
+  public boolean isEnabled() {
+    return true;
+  }
 }

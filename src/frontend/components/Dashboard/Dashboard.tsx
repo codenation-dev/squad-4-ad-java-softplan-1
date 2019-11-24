@@ -1,6 +1,6 @@
 import React, { useEffect } from "react"
 import { Wireframe } from "../_common/Wireframe"
-import { useLogs, readLogs } from "./useLogs"
+import { useLogs } from "./useLogs"
 import { SearchBar } from "./SearchBar"
 import { LogsList } from "./LogsList"
 import { showToastC } from "../_common/ToastService"
@@ -17,11 +17,7 @@ export function Dashboard() {
 function Content() {
   const data = useLogs()
   React.useEffect(() => {
-    readLogs(data)
-      .then(res => {
-        data.setLogs(res.results)
-      })
-      .catch(showToastC("error"))
+    data.updateLogs("reset").catch(showToastC("error"))
   }, [])
 
   return (

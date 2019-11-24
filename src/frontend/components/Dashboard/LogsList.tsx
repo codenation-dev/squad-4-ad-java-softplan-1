@@ -4,7 +4,7 @@ import { Segment, Label } from "semantic-ui-react"
 import immer from "immer"
 import dayjs from "dayjs"
 import { LogLevelLabel } from "../_common/LogLevelLabel"
-import { LogCount } from "../_api/customTypes"
+import { LogListDTO } from "../_api/swagger/api-types"
 
 export function LogsList(i: { data: Model }) {
   const { data } = i
@@ -34,7 +34,7 @@ export function LogsList(i: { data: Model }) {
   }, [allSelected, setAllSelected, logs, data.setLogs])
 
   const setDetail = React.useCallback(
-    (log: LogCount | null) => ev => {
+    (log: LogListDTO | null) => ev => {
       data.setSelectedLog(log)
     },
     [data]
@@ -87,12 +87,12 @@ export function LogsList(i: { data: Model }) {
               />
             </div>
             <div className="log-level">
-              <LogLevelLabel level={log.logLevel} />
+              <LogLevelLabel level={log.logLevel as string} />
             </div>
             <div className="info">
               <LogInfoCell log={log} />
             </div>
-            <div className="count">{log.count}</div>
+            {/* <div className="count">{log.count}</div> */}
           </Segment>
         ))}
       </Segment.Group>
@@ -100,11 +100,11 @@ export function LogsList(i: { data: Model }) {
   )
 }
 
-function LogInfoCell(i: { log: LogCount }) {
+function LogInfoCell(i: { log: LogListDTO }) {
   return (
     <>
       <div>{i.log.message}</div>
-      <div>{i.log.clientName}</div>
+      <div>{i.log.client!.name}</div>
       <div>{dayjs(i.log.createdAt).format("DD/MM/YY hh:mm:ss")}</div>
     </>
   )

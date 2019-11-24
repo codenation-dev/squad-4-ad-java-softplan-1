@@ -8,8 +8,11 @@ spring:
   jpa:
     database-platform: org.hibernate.dialect.H2Dialect
     show-sql: true
-    hibernate:
-      ddl-auto: create-drop
+    # hibernate:
+    #   ddl-auto: create-drop
+
+  main:
+    banner-mode: "off"
 
 security:
   oauth2:
@@ -17,6 +20,11 @@ security:
       scope: password
       client-id: clientid
       client-secret: 123456
+logging:
+  pattern:
+    console: |
+      %d{dd-MM-yyyy HH:mm:ss} %highlight(%-5level) %logger.%M - %msg%n
+
 ## old
 #server.port=9090
 #spring.jpa.database=POSTGRESQL

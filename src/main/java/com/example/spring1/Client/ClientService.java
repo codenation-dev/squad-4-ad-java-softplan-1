@@ -4,7 +4,6 @@ import com.example.spring1.User.User;
 import java.util.List;
 import java.util.UUID;
 import lombok.AllArgsConstructor;
-import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -38,8 +37,7 @@ public class ClientService {
     return generated;
   }
 
-  List<Client> list(Authentication auth) {
-    User user = (User) auth.getPrincipal();
+  List<Client> list(User user) {
     return this.clientRepository.findByUsers_Id(user.getId());
   }
 }

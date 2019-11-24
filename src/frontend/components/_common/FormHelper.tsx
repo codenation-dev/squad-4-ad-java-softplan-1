@@ -12,14 +12,6 @@ export class FormHelper<Values extends {}> {
       error: (this.ctrl.touched[field] && this.ctrl.errors[field]) || undefined
     }
   }
-
-  bindField(field: keyof Values) {
-    const hasError = Boolean(this.ctrl.errors[field])
-    console.log(hasError)
-    return {
-      error: hasError
-    }
-  }
 }
 
 const errorMessageStyle = {

@@ -7,10 +7,14 @@ import { requester } from "./_api/requester"
 import { useState } from "react"
 import { formatError } from "./_common/formatError"
 import Router from "next/router"
+import Head from "next/head"
 
 export function Login() {
   return (
     <div>
+      <Head>
+        <title>Aceleralog</title>
+      </Head>
       <div className="ui middle aligned grid" style={{ height: "100vh", justifyContent: "center" }}>
         <div className="column" style={{ maxWidth: "450px" }}>
           <h2 className="ui center aligned header">Login</h2>
@@ -49,7 +53,8 @@ function LoginForm() {
         try {
           await requester.authenticate({ username: value.username, password: value.password })
           console.log("login success")
-          Router.push("/dashboard")
+          // Router.push("/dashboard")
+          window.location.pathname = "/dashboard"
         } catch (err) {
           console.log(err)
           setError(formatError(err))

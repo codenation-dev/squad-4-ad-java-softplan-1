@@ -5,8 +5,23 @@ export interface Client {
   users?: User[]
 }
 
+export interface ClientShortDTO {
+  id?: number
+  name?: number
+}
+
 export interface GrantedAuthority {
   authority?: string
+}
+
+export interface LogListDTO {
+  client?: ClientShortDTO
+  code?: string
+  createdAt?: string
+  details?: string
+  id?: number
+  logLevel?: string
+  message?: string
 }
 
 export interface ModelAndView {
@@ -99,6 +114,35 @@ export interface OAuth2AccessToken {
 
 export interface OAuth2RefreshToken {
   value?: string
+}
+
+export interface Pageable {
+  offset?: number
+  pageNumber?: number
+  pageSize?: number
+  paged?: boolean
+  sort?: Sort
+  unpaged?: boolean
+}
+
+export interface Page_LogListDTO_ {
+  content?: LogListDTO[]
+  empty?: boolean
+  first?: boolean
+  last?: boolean
+  number?: number
+  numberOfElements?: number
+  pageable?: Pageable
+  size?: number
+  sort?: Sort
+  totalElements?: number
+  totalPages?: number
+}
+
+export interface Sort {
+  empty?: boolean
+  sorted?: boolean
+  unsorted?: boolean
 }
 
 export interface User {

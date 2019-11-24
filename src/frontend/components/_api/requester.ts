@@ -1,5 +1,7 @@
 import { SwaggerRequester, IRequest, IOperation, settings } from "./swagger/api-common"
+import Router from "next/router"
 
+// ver: babelrc.js
 const BACKEND_URL = process.env.BACKEND_URL!
 const CLIENT_ID = process.env.CLIENT_ID
 const CLIENT_SECRET = process.env.CLIENT_SECRET
@@ -13,6 +15,7 @@ interface TokenResponse {
   scope
 }
 
+// ver: github wkrueger/swagger-ts-template
 class RestRequester extends SwaggerRequester {
   async authenticate(i: { username; password }) {
     const data = { grant_type: "password", username: i.username, password: i.password }
@@ -34,22 +37,31 @@ class RestRequester extends SwaggerRequester {
     localStorage.setItem("auth_info", JSON.stringify(respJson))
   }
 
-  async getCurrentToken(): Promise<string> {
+  getCurrentToken(): string {
     //fixme: a forma mais correta é usar cookies
     const stored = localStorage.getItem("auth_info") || "{}"
     const storedJson = JSON.parse(stored) as TokenResponse
     return storedJson.access_token
   }
 
+  clearToken() {
+    localStorage.removeItem("auth_info")
+    Router.push("/")
+  }
+
+  // @Override
   async handler(
-    request: IRequest & GApiCommon.MergeToRequest,
-    input: Record<string, any>,
-    operation: IOperation
+    request: IRequest,
+    input: Record<string, any> & GApiCommon.MergeToRequest,
+    operation: IOperation,
+    retries = 0
   ) {
     const token = this.getCurrentToken()
     const url = new URL(BACKEND_URL + request.url)
-    const params = request.query || {}
-    Object.keys(params).forEach(key => url.searchParams.append(key, params[key]))
+    const params = Object.assign({}, request.query || {}, input._extraQueryParams || {})
+    Object.keys(params).forEach(
+      key => params[key] !== undefined && url.searchParams.append(key, params[key])
+    )
     const body = ["GET", "DELETE"].includes(request.verb!)
       ? undefined
       : JSON.stringify(request.body)
@@ -57,18 +69,34 @@ class RestRequester extends SwaggerRequester {
     if (token) {
       headers.authorization = `Bearer ${token}`
     }
-    if (body) {
-      headers["Content-Type"] = "application/json"
-    }
+    headers["Content-Type"] = "application/json"
     const fetchResp = await fetch(url.toString(), {
       method: request.verb,
       body,
       headers
     })
-    if (fetchResp.status === 204) return {}
-    return fetchResp.json()
+    if (fetchResp.status == 204) return {}
+    if (fetchResp.status == 401) {
+      this.clearToken()
+    }
+    let jsonResp = {}
+    try {
+      jsonResp = await fetchResp.json()
+    } catch (err) {}
+    if (String(fetchResp.status).substr(0, 1) !== "2") {
+      throw jsonResp
+    }
+    return jsonResp
   }
 }
 
 export const requester = new RestRequester()
 settings.getRequester = () => requester
+
+declare global {
+  namespace GApiCommon {
+    interface MergeToRequest {
+      _extraQueryParams?: Record<string, any>
+    }
+  }
+}

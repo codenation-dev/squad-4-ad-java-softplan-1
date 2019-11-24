@@ -1,31 +1,76 @@
 package com.example.spring1.Log;
 
-import java.util.List;
-
-import javax.persistence.criteria.Predicate;
-import javax.persistence.criteria.Root;
-
-import org.springframework.data.jpa.domain.Specification;
-import org.springframework.stereotype.Service;
+import com.example.spring1.Client.Client;
+import com.example.spring1.Client.ClientRepository;
+import com.example.spring1.Log.dto.LogListDTO;
+import com.example.spring1.User.User;
+import com.querydsl.core.BooleanBuilder;
+import com.querydsl.core.types.Predicate;
+import java.util.function.Function;
 import lombok.AllArgsConstructor;
+import org.modelmapper.ModelMapper;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Service;
 
 @Service
 @AllArgsConstructor
 public class LogService {
+  private final LogRepository logRepository;
+  private final ClientRepository clientRepository;
 
-  private final LogRepository repository;
+  Predicate contextFilter(User user) {
+    return QLog.log.client.users.contains(user);
+  }
 
-  public static Specification<Log> fromClient(LogFilterParams params) {
-    return (root, query, builder) -> {
-      if (params.clientId != null) {
-        builder.equal(root.get("client"), params.clientId);
-      }
-      return builder.get;
+  Page<LogListDTO> listLogs(
+    User user,
+    Pageable pageable,
+    LogFilterParams filter
+  ) {
+    // aplicar filtros
+    Predicate base = contextFilter(user);
+    QLog qLog = QLog.log;
+    BooleanBuilder builder = new BooleanBuilder();
+    builder = builder.and(base);
+    if (filter.clientId != null) {
+      builder = builder.and(qLog.client.id.eq(filter.clientId));
     }
+    if (filter.code != null) {
+      builder = builder.and(qLog.code.like(filter.code));
+    }
+    if (filter.logLevel != null) {
+      builder = builder.and(qLog.logLevel.eq(filter.logLevel));
+    }
+    if (filter.createdAt_gt != null) {
+      builder = builder.and(qLog.createdAt.gt(filter.createdAt_gt));
+    }
+    if (filter.createdAt_lt != null) {
+      builder = builder.and(qLog.createdAt.lt(filter.createdAt_lt));
+    }
+    Page<Log> page = logRepository.findAll(builder, pageable);
+
+    // mapear
+    ModelMapper modelMapper = new ModelMapper();
+
+    // JAVA TENTANDO TER FP KKKKKKKKKKKKKKKKKKKKk
+    Function<Log, LogListDTO> mapper =
+      log -> {
+        return modelMapper.map(log, LogListDTO.class);
+      };
+    return page.map(mapper);
   }
 
-  List<Log> listLogs(LogFilterParams filter) {
-    
+  public Long submit(String clientToken, User user, Log log) {
+    Client foundClient = clientRepository.findByapiTokenAndUsersId(
+      clientToken,
+      user.getId()
+    );
+    if (foundClient == null) {
+      throw new RuntimeException("Cliente inválido");
+    }
+    log.setId(null);
+    log = logRepository.save(log);
+    return log.getId();
   }
-
 }

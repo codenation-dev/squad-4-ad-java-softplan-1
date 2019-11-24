@@ -1,8 +1,10 @@
 import React from "react"
 import { DropdownItemProps } from "semantic-ui-react"
-import { showToastC } from "../_common/ToastService"
-import { LogCount } from "../_api/customTypes"
+import { showToastC, showToast } from "../_common/ToastService"
 import { listClientsUsingGET } from "../_api/swagger/modules/ClientController"
+import { formatError } from "../_common/formatError"
+import { listLogsUsingGET } from "../_api/swagger/modules/LogController"
+import { LogListDTO } from "../_api/swagger/api-types"
 
 interface Filters {
   client?
@@ -15,9 +17,12 @@ export function useLogs() {
   const [clients, setClients] = React.useState<DropdownItemProps[]>([ALL_CLIENTS_OPTION])
   const [selectedClient, setSelectedClient] = React.useState("*" as string | number)
   const [selectedSort, setSelectedSort] = React.useState("*")
-  const [logs, setLogs] = React.useState<LogCount[]>([])
-  const [selectedLog, setSelectedLog] = React.useState<LogCount | null>(null)
+  const [logs, setLogs] = React.useState<LogListDTO[]>([])
+  const [logsPage, setLogsPage] = React.useState(0)
+  const [selectedLog, setSelectedLog] = React.useState<LogListDTO | null>(null)
   const [filter, setFilter] = React.useState<Filters>({})
+  const [globalError, setGlobalError] = React.useState("")
+
   React.useEffect(() => {
     listClientsUsingGET({})
       .then(clients => {
@@ -27,8 +32,29 @@ export function useLogs() {
         ]
         setClients(dropdownContent)
       })
-      .catch(showToastC("error"))
+      .catch(err => {
+        showToast("error", formatError(err))
+        setGlobalError(formatError(err))
+      })
   }, [])
+
+  async function updateLogs(mode: "reset" | "paging"): Promise<void> {
+    const page = mode === "reset" ? 0 : logsPage + 1
+    const out = await listLogsUsingGET({
+      _extraQueryParams: {
+        sort: nullMap(selectedSort) || undefined
+      },
+      clientId: (nullMap(selectedClient) as any) || undefined,
+      pageNumber: page,
+      ...filter
+    })
+    setLogsPage(out.pageable!.pageNumber! || page)
+    if (mode === "reset") {
+      setLogs(out.content || [])
+    } else if (mode === "paging") {
+      setLogs([...logs, ...(out.content || [])])
+    }
+  }
 
   return {
     clients,
@@ -39,24 +65,23 @@ export function useLogs() {
     setSelectedSort,
     logs,
     setLogs,
+    logsPage,
+    updateLogs,
+    // setLogsPage,
     filter,
     selectedLog,
-    setSelectedLog
+    setSelectedLog,
+    globalError
   }
 }
 
+/**
+ * Devido a alguma limitação do semantic, tive que designar como valor de select vazio
+ * o "*", pois '' ou null traziam problemas
+ */
 function nullMap<T extends string | number>(i?: T) {
   if (i === "*") return undefined
   return i
-}
-
-export async function readLogs(model: Model) {
-  const out = await listLogsGrouped({
-    sortBy: nullMap(model.selectedSort),
-    client: nullMap(model.selectedClient) as any,
-    ...model.filter
-  })
-  return out
 }
 
 export type Model = ReturnType<typeof useLogs>
