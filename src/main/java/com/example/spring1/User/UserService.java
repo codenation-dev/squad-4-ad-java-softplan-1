@@ -1,5 +1,6 @@
 package com.example.spring1.User;
 
+import com.example.spring1._Common.MapperService;
 import com.example.spring1.Client.Client;
 import com.example.spring1.Client.ClientRepository;
 import com.example.spring1.User.dto.UserDetailDTO;
@@ -17,16 +18,17 @@ import org.springframework.stereotype.Service;
 public class UserService {
   private final UserRepository userRepository;
   private final ClientRepository clientRepository;
+  private final MapperService modelMapperService;
 
   UserDetailDTO getUser(Long id) {
     User user = userRepository.getOne(id);
-    ModelMapper mapper = new ModelMapper();
+    ModelMapper mapper = modelMapperService.getMapper();
     return mapper.map(user, UserDetailDTO.class);
   }
 
   List<UserListDTO> listUsers() {
     List<User> found = userRepository.findAll();
-    ModelMapper mapper = new ModelMapper();
+    ModelMapper mapper = modelMapperService.getMapper();
     Function<User, UserListDTO> mapperFn =
       user -> {
         return mapper.map(user, UserListDTO.class);

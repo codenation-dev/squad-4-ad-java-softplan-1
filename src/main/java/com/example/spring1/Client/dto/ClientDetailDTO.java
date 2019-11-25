@@ -7,6 +7,6 @@ import lombok.Setter;
 @Setter
 public class ClientDetailDTO {
   Long id;
-  Long name;
+  String name;
   String apiToken;
 }
