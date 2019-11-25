@@ -18,7 +18,8 @@ public class UserService {
   private final UserRepository userRepository;
   private final ClientRepository clientRepository;
 
-  UserDetailDTO getUser(User user) {
+  UserDetailDTO getUser(Long id) {
+    User user = userRepository.getOne(id);
     ModelMapper mapper = new ModelMapper();
     return mapper.map(user, UserDetailDTO.class);
   }

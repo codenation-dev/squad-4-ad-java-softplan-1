@@ -1,0 +1,22 @@
+version: "3.7"
+# apenas banco de dados
+services:
+  spring1-postgres:
+    image: postgres:9.5
+    container_name: spring1-postgres
+    volumes:
+      - spring1-pg:/var/lib/postgresql/data
+    environment:
+      - "POSTGRES_DB=spring1"
+      - "POSTGRES_USER=adm"
+      - "POSTGRES_PASSWORD=123456"
+    ports:
+      - "8091:5432" #local only
+    networks:
+      - default
+
+volumes:
+  spring1-pg:
+
+networks:
+  default:

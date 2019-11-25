@@ -13,11 +13,17 @@ Aplicativo de registro de logs, à la [Sentry](https://sentry.io/welcome/). OK, 
 - Execução via terminal:
   - `./mvnw install [-DskipTests]` - primeira instalação
   - `./mvnw spring-boot:run` - executar (porta 8080)
+- Banco de dados: acabamos ficando com um postgres, executar o `docker-compose.yml` presente na pasta pra subir um container de postgres.
 - Listagem das rotas em "/swagger-ui.html"
 
 **Usuário inicial**
 
 A primeira execução cria um usuário administrador com username=`adm` e senha=`123456`.
+
+**Padrão de código**
+
+- Tabs com 2 espaços
+- Formatação com format on save + prettier + prettier-plugin-java (não obrigatório porque ainda é complicado configurar em alguns editores)
 
 ## Instalação frontend
 

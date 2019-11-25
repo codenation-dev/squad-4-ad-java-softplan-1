@@ -50,11 +50,17 @@
             <optional>true</optional>
         </dependency>
 
-        <dependency>
+        <!-- <dependency>
             <groupId>com.h2database</groupId>
             <artifactId>h2</artifactId>
             <scope>runtime</scope>
             <version>1.4.199</version>
+        </dependency> -->
+
+        <dependency>
+            <groupId>org.postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+            <scope>runtime</scope>
         </dependency>
 
         <dependency>
@@ -120,6 +126,13 @@
             <version>2.3.0</version>
         </dependency>
 
+        <!-- FIX HIBERNATE BUGS FOR PGSQL -->
+
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-core</artifactId>
+            <version>5.4.2.Final</version>
+        </dependency>
 
     </dependencies>
 
