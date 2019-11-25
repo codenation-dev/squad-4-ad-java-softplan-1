@@ -53,7 +53,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
   public void configure(WebSecurity web) throws Exception {
     // abrir todos os arquivos necessário pro swagger
       web.ignoring().antMatchers(
-        HttpMethod.GET,
         "/",
         "/webjars/**",
         "/*.html",

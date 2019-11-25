@@ -61,15 +61,13 @@ public class LogService {
     return page.map(mapper);
   }
 
-  public Long submit(String clientToken, User user, Log log) {
-    Client foundClient = clientRepository.findByapiTokenAndUsersId(
-      clientToken,
-      user.getId()
-    );
+  public Long submit(String clientToken, Log log) {
+    Client foundClient = clientRepository.findByapiToken(clientToken);
     if (foundClient == null) {
       throw new RuntimeException("Cliente inválido");
     }
     log.setId(null);
+    log.setClient(foundClient);
     log = logRepository.save(log);
     return log.getId();
   }
