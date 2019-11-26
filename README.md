@@ -13,7 +13,7 @@ Aplicativo de registro de logs, à la [Sentry](https://sentry.io/welcome/). OK, 
 - Execução via terminal:
   - `./mvnw install [-DskipTests]` - primeira instalação
   - `./mvnw spring-boot:run` - executar (porta 8080)
-- Executar o `docker-compose.yml` presente na pasta pra subir um container de postgres, ou configurar localmente o postgres9.5+ se forma análoga ao que se tem no compose.
+- Executar o `docker-compose.yml` presente na pasta pra subir um container de postgres (`docker-compose up`), ou configurar localmente o postgres9.5+ se forma análoga ao que se tem no compose.
 - Listagem das rotas em "/swagger-ui.html"
 
 **Usuário inicial**
