@@ -5,13 +5,37 @@ export interface Client {
   users?: User[]
 }
 
+export interface ClientCreateDTO {
+  name?: string
+}
+
+export interface ClientDetailDTO {
+  apiToken?: string
+  id?: number
+  name?: string
+}
+
 export interface ClientShortDTO {
   id?: number
-  name?: number
+  name?: string
 }
 
 export interface GrantedAuthority {
   authority?: string
+}
+
+export interface Log {
+  client?: Client
+  code?: string
+  createdAt?: string
+  details?: string
+  id?: number
+  logLevel?: "ERROR" | "WARN" | "INFO" | "DEBUG" | "TRACE"
+  message?: string
+}
+
+export interface LogCreatedDTO {
+  id?: number
 }
 
 export interface LogListDTO {
@@ -156,8 +180,27 @@ export interface User {
   enabled?: boolean
   id?: number
   password?: string
-  role?: string
   username?: string
+}
+
+export interface UserDetailDTO {
+  clients?: ClientDetailDTO[]
+  displayName?: string
+  email?: string
+  id?: number
+  username?: string
+}
+
+export interface UserListDTO {
+  displayName?: string
+  id?: number
+  username?: string
+}
+
+export interface UserPatchDTO {
+  clients?: number[]
+  displayName?: string
+  password?: string
 }
 
 export interface View {

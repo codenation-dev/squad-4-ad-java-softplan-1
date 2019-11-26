@@ -1,5 +1,6 @@
   ✔ Revisar DTOs de usuário @done (24/11/2019 18:35:05)
   ☐ Validação
+  ☐ Redefinir token
   
   ☐ Limitar permissões de usuário pra um nível admin
   ☐ Como ocultar erros na produção? (fora do escopo)

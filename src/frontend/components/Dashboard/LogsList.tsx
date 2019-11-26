@@ -87,7 +87,7 @@ export function LogsList(i: { data: Model }) {
               />
             </div>
             <div className="log-level">
-              <LogLevelLabel level={log.logLevel as string} />
+              <LogLevelLabel level={log.logLevel} />
             </div>
             <div className="info">
               <LogInfoCell log={log} />

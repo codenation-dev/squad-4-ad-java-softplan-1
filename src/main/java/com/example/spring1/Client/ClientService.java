@@ -1,19 +1,30 @@
 package com.example.spring1.Client;
 
+import com.example.spring1.Client.dto.ClientCreateDTO;
+import com.example.spring1.Client.dto.ClientShortDTO;
 import com.example.spring1.User.User;
+import com.example.spring1._Common.MapperService;
+
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
+
 import lombok.AllArgsConstructor;
+
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 @Service
 @AllArgsConstructor
 public class ClientService {
   private final ClientRepository clientRepository;
+  private final MapperService mapperService;
 
-  Client create(Client client) {
-    client.setApiToken(UUID.randomUUID().toString());
-    return clientRepository.save(client);
+  Client create(ClientCreateDTO client) {
+    Client toCreate = new Client();
+    toCreate.setName(client.getName());
+    toCreate.setApiToken(UUID.randomUUID().toString());
+    return clientRepository.save(toCreate);
   }
 
   Client patch(Client client) {
@@ -37,7 +48,11 @@ public class ClientService {
     return generated;
   }
 
-  List<Client> list(User user) {
-    return this.clientRepository.findByUsers_Id(user.getId());
+  List<ClientShortDTO> list(User user) {
+    ModelMapper mapper = mapperService.getMapper();
+    List<Client> clients = this.clientRepository.findByUsers_Id(user.getId());
+    return clients.stream().map(client -> {
+      return mapper.map(client, ClientShortDTO.class);
+    }).collect(Collectors.toList());
   }
 }

@@ -18,6 +18,11 @@ class MyDocument extends Document {
             rel="stylesheet"
             href="//cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css"
           />
+          <style>{`
+            ._pointer {
+              cursor: pointer;
+            }
+          `}</style>
         </Head>
         <body>
           <Main />

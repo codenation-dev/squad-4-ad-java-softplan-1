@@ -2,7 +2,6 @@ import "toastr/toastr.scss"
 import toast from "toastr"
 
 export function showToast(type: "error" | "info" | "success" | "warning", message) {
-  console.log(message)
   toast[type](String(message))
 }
 

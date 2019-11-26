@@ -17,8 +17,8 @@ interface TokenResponse {
 
 // ver: github wkrueger/swagger-ts-template
 class RestRequester extends SwaggerRequester {
-  async authenticate(i: { username; password }) {
-    const data = { grant_type: "password", username: i.username, password: i.password }
+  async authenticate({ username = "", password = "" }) {
+    const data = { grant_type: "password", username, password }
     const dataStr = Object.entries(data)
       .map(([k, v]) => `${encodeURIComponent(k)}=${encodeURIComponent(v)}`)
       .join("&")
@@ -37,15 +37,16 @@ class RestRequester extends SwaggerRequester {
     localStorage.setItem("auth_info", JSON.stringify(respJson))
   }
 
-  getCurrentToken(): string {
+  getSavedAuth() {
     //fixme: a forma mais correta é usar cookies
     const stored = localStorage.getItem("auth_info") || "{}"
     const storedJson = JSON.parse(stored) as TokenResponse
-    return storedJson.access_token
+    return storedJson
   }
 
   clearToken() {
     localStorage.removeItem("auth_info")
+    localStorage.removeItem("user_info")
     Router.push("/")
   }
 
@@ -53,10 +54,13 @@ class RestRequester extends SwaggerRequester {
   async handler(
     request: IRequest,
     input: Record<string, any> & GApiCommon.MergeToRequest,
-    operation: IOperation,
-    retries = 0
+    operation: IOperation
   ) {
-    const token = this.getCurrentToken()
+    const token = this.getSavedAuth()?.access_token
+    if (!token) {
+      this.clearToken()
+      return {}
+    }
     const url = new URL(BACKEND_URL + request.url)
     const params = Object.assign({}, request.query || {}, input._extraQueryParams || {})
     Object.keys(params).forEach(
@@ -75,14 +79,20 @@ class RestRequester extends SwaggerRequester {
       body,
       headers
     })
+    console.log("fetchresp", request, fetchResp.status)
     if (fetchResp.status == 204) return {}
     if (fetchResp.status == 401) {
       this.clearToken()
+      return {}
     }
     let jsonResp = {}
     try {
+      console.log("parsing", request)
       jsonResp = await fetchResp.json()
-    } catch (err) {}
+      console.log("parsed", request, jsonResp)
+    } catch (err) {
+      // console.error("parse error at", request, err)
+    }
     if (String(fetchResp.status).substr(0, 1) !== "2") {
       throw jsonResp
     }

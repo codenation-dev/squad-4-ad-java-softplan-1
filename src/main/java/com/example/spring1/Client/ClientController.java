@@ -1,5 +1,7 @@
 package com.example.spring1.Client;
 
+import com.example.spring1.Client.dto.ClientCreateDTO;
+import com.example.spring1.Client.dto.ClientShortDTO;
 import com.example.spring1.User.User;
 import java.util.List;
 import lombok.AllArgsConstructor;
@@ -17,13 +19,13 @@ public class ClientController {
   private ClientService clientService;
 
   @GetMapping
-  List<Client> listClients(Authentication auth) {
+  List<ClientShortDTO> listClients(Authentication auth) {
     User user = (User) auth.getPrincipal();
     return this.clientService.list(user);
   }
 
   @PostMapping
-  Client createClient(@RequestBody Client client) {
+  Client createClient(@RequestBody ClientCreateDTO client) {
     return clientService.create(client);
   }
 }

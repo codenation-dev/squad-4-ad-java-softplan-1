@@ -20,27 +20,19 @@ import org.springframework.stereotype.Component;
 @Order(Ordered.HIGHEST_PRECEDENCE)
 public class CorsFilter implements Filter {
 
-  public CorsFilter() {}
+  public CorsFilter() {
+  }
 
   @Override
-  public void doFilter(
-    ServletRequest req,
-    ServletResponse res,
-    FilterChain chain
-  )
-    throws IOException, ServletException {
+  public void doFilter(ServletRequest req, ServletResponse res, FilterChain chain)
+      throws IOException, ServletException {
     HttpServletResponse response = (HttpServletResponse) res;
     HttpServletRequest request = (HttpServletRequest) req;
     response.setHeader("Access-Control-Allow-Origin", "*");
-    response.setHeader(
-      "Access-Control-Allow-Methods",
-      "POST, GET, PUT, OPTIONS, DELETE"
-    );
+    response.setHeader("Access-Control-Allow-Methods", "POST, GET, PUT, PATCH, OPTIONS, DELETE");
     response.setHeader("Access-Control-Max-Age", "3600");
-    response.setHeader(
-      "Access-Control-Allow-Headers",
-      "X-Requested-With, accept, content-type, authorization, grant_type"
-    );
+    response.setHeader("Access-Control-Allow-Headers",
+        "X-Requested-With, accept, content-type, authorization, grant_type");
 
     if ("OPTIONS".equalsIgnoreCase(request.getMethod())) {
       response.setStatus(HttpServletResponse.SC_OK);
@@ -50,8 +42,10 @@ public class CorsFilter implements Filter {
   }
 
   @Override
-  public void init(FilterConfig filterConfig) {}
+  public void init(FilterConfig filterConfig) {
+  }
 
   @Override
-  public void destroy() {}
+  public void destroy() {
+  }
 }

@@ -9,7 +9,7 @@ export type listClientsUsingGET_Type = {
   details?: {}
   principal?: {}
 }
-export type listClientsUsingGET_Response = Types.Client[]
+export type listClientsUsingGET_Response = Types.ClientShortDTO[]
 /**
  * GET /clients
  *
@@ -28,4 +28,22 @@ export const listClientsUsingGET = ApiCommon.requestMaker<
     { name: "details", required: false, in: "query" },
     { name: "principal", required: false, in: "query" }
   ]
+})
+
+export type createClientUsingPOST_Type = {
+  client: Types.ClientCreateDTO
+}
+export type createClientUsingPOST_Response = Types.Client
+/**
+ * POST /clients
+ *
+ **/
+export const createClientUsingPOST = ApiCommon.requestMaker<
+  createClientUsingPOST_Type,
+  createClientUsingPOST_Response
+>({
+  id: "createClientUsingPOST",
+  path: "/clients",
+  verb: "POST",
+  parameters: [{ name: "client", required: true, in: "body" }]
 })

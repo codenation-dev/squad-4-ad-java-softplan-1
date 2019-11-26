@@ -1,0 +1,31 @@
+._settings {
+  ._avatarBlock {
+    text-align: center;
+  }
+  ._header {
+    margin: 0;
+  }
+
+  ._columns {
+    display: flex;
+    flex-direction: row;
+  }
+
+  ._list,
+  ._clients {
+    width: 100%;
+  }
+
+  ._list .ui.segment {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    ._clientName {
+      flex-grow: 1;
+    }
+  }
+}
+
+._clients {
+  margin-top: 14px;
+}

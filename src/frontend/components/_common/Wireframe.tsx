@@ -1,21 +1,37 @@
 import React from "react"
 import Head from "next/head"
-import { Dropdown, Divider } from "semantic-ui-react"
+import { Dropdown, Divider, Menu } from "semantic-ui-react"
+import { UserDetailDTO } from "../_api/swagger/api-types"
+import { selfUsingGET } from "../_api/swagger/modules/UserController"
+import Link from "next/link"
 
 const initialUserContext = {
   user: {
     displayName: ""
-  }
+  } as UserDetailDTO,
+  refresh() {}
 }
 export const userContext = React.createContext(initialUserContext)
 
 export const Wireframe: React.SFC<{ title }> = ({ children, title }) => {
   const [userInfo, setUserInfo] = React.useState(initialUserContext)
+  const refresh = async () => {
+    const user = await selfUsingGET({})
+    const toSave = { user, refresh }
+    localStorage.setItem("user_info", JSON.stringify(user))
+    setUserInfo(toSave)
+  }
   React.useEffect(() => {
-    try {
-      const userInfo = JSON.parse(localStorage.get("userInfo"))
-      setUserInfo({ user: userInfo })
-    } catch (err) {}
+    async function run() {
+      try {
+        const userInfo = JSON.parse(localStorage.getItem("user_info")!)
+        if (!userInfo) throw Error()
+        setUserInfo({ user: userInfo, refresh })
+      } catch (err) {
+        refresh()
+      }
+    }
+    run()
   }, [])
 
   return (
@@ -38,11 +54,16 @@ const WireframeInner: React.SFC<{ username }> = i => {
       `}</style>
       <div className="ui fixed menu inverted">
         <div className="ui container">
-          <div className="header item">Aceleralog</div>
+          <Link href="/dashboard">
+            <div className="header item _pointer">Aceleralog</div>
+          </Link>
           <div className="right menu">
+            <Menu.Item>{i.username}</Menu.Item>
             <Dropdown item icon="user circle">
               <Dropdown.Menu>
-                <Dropdown.Item>Clientes</Dropdown.Item>
+                <Link href="/settings">
+                  <Dropdown.Item>Clientes</Dropdown.Item>
+                </Link>
                 <Dropdown.Item>Opções</Dropdown.Item>
                 <Divider></Divider>
                 <Dropdown.Item>Sair</Dropdown.Item>

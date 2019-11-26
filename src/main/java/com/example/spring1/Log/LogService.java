@@ -23,11 +23,7 @@ public class LogService {
     return QLog.log.client.users.contains(user);
   }
 
-  Page<LogListDTO> listLogs(
-    User user,
-    Pageable pageable,
-    LogFilterParams filter
-  ) {
+  Page<LogListDTO> listLogs(User user, Pageable pageable, LogFilterParams filter) {
     // aplicar filtros
     Predicate base = contextFilter(user);
     QLog qLog = QLog.log;
@@ -54,11 +50,11 @@ public class LogService {
     ModelMapper modelMapper = new ModelMapper();
 
     // JAVA TENTANDO TER FP KKKKKKKKKKKKKKKKKKKKk
-    Function<Log, LogListDTO> mapper =
-      log -> {
-        return modelMapper.map(log, LogListDTO.class);
-      };
-    return page.map(mapper);
+    Function<Log, LogListDTO> mapper = log -> {
+      return modelMapper.map(log, LogListDTO.class);
+    };
+    Page<LogListDTO> out = page.map(mapper);
+    return out;
   }
 
   public Long submit(String clientToken, Log log) {

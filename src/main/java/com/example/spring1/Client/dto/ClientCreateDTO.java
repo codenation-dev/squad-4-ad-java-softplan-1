@@ -5,9 +5,8 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class ClientShortDTO {
+public class ClientCreateDTO {
 
-  Long id;
   String name;
 
 }
