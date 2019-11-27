@@ -1,6 +1,6 @@
 import React from "react"
 import { Model } from "./useLogs"
-import { Segment, Label } from "semantic-ui-react"
+import { Segment, Label, Message, Header, Icon } from "semantic-ui-react"
 import immer from "immer"
 import dayjs from "dayjs"
 import { LogLevelLabel } from "../_common/LogLevelLabel"
@@ -95,6 +95,14 @@ export function LogsList(i: { data: Model }) {
             {/* <div className="count">{log.count}</div> */}
           </Segment>
         ))}
+        {!logs.length && (
+          <Segment placeholder>
+            <Header icon>
+              <Icon name="inbox" />
+              Nenhum log!
+            </Header>
+          </Segment>
+        )}
       </Segment.Group>
     </div>
   )
