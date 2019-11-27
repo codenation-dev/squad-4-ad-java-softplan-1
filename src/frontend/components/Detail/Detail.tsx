@@ -29,7 +29,7 @@ export function Detail({ data }: { data: Model }) {
       <Header as="h1">{selected.message}</Header>
 
       <Segment>
-        <List horizontal divided>
+        <List horizontal divided style={{ display: "flex", alignItems: "center" }}>
           <List.Item>
             <List.Content>
               <LogLevelLabel level={selected.logLevel} />

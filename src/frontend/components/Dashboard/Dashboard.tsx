@@ -6,18 +6,23 @@ import { LogsList } from "./LogsList"
 import { showToastC } from "../_common/ToastService"
 import { Detail } from "../Detail/Detail"
 
-export function Dashboard() {
+export function Dashboard(initial: { id?: number }) {
   return (
     <Wireframe title="Painel">
-      <Content />
+      <Content initialSelectedLog={initial.id} />
     </Wireframe>
   )
 }
 
-function Content() {
+Dashboard.getInitialProps = async ({ query }) => {
+  return { id: Number(query.id) || undefined }
+}
+
+function Content({ initialSelectedLog = undefined as undefined | number }) {
   const data = useLogs()
   React.useEffect(() => {
-    data.updateLogs("reset").catch(showToastC("error"))
+    console.log("initial", initialSelectedLog)
+    data.updateLogs("reset", initialSelectedLog).catch(showToastC("error"))
   }, [])
 
   return (

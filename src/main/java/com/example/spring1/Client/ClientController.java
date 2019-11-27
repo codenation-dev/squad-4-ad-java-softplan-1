@@ -2,7 +2,10 @@ package com.example.spring1.Client;
 
 import com.example.spring1.Client.dto.ClientCreateDTO;
 import com.example.spring1.Client.dto.ClientShortDTO;
+import com.example.spring1.Client.dto.ResetTokenDTO;
 import com.example.spring1.User.User;
+
+import java.util.HashMap;
 import java.util.List;
 import lombok.AllArgsConstructor;
 import org.springframework.security.core.Authentication;
@@ -10,6 +13,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -27,5 +31,17 @@ public class ClientController {
   @PostMapping
   Client createClient(@RequestBody ClientCreateDTO client) {
     return clientService.create(client);
+  }
+
+  @PostMapping("/reset-token")
+  ResetTokenDTO resetToken(@RequestParam(required = true) Long clientId, Authentication auth) {
+    User user = (User) auth.getPrincipal();
+    if (!clientService.userHasAccess(user.getId(), clientId)) {
+      throw new RuntimeException("Usuário não possui acesso a esse cliente.");
+    }
+    String newToken = clientService.resetApiToken(clientId);
+    ResetTokenDTO out = new ResetTokenDTO();
+    out.setApiToken(newToken);
+    return out;
   }
 }

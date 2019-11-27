@@ -55,4 +55,9 @@ public class ClientService {
       return mapper.map(client, ClientShortDTO.class);
     }).collect(Collectors.toList());
   }
+
+  Boolean userHasAccess(Long userId, Long clientId) {
+    List<Client> found = clientRepository.getByIdAndUsersId(clientId, userId);
+    return found.size() > 0;
+  }
 }

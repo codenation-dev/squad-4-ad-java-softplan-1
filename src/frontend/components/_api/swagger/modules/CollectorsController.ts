@@ -3,10 +3,9 @@ import * as ApiCommon from "../api-common"
 import * as Types from "../api-types"
 
 export type submitLogUsingPOST_Type = {
-  apiToken: string
-  log: Types.Log
+  body: Types.SubmitLogDTO
 }
-export type submitLogUsingPOST_Response = Types.LogCreatedDTO
+export type submitLogUsingPOST_Response = Types.LogListDTO
 /**
  * POST /collectors/submit-log
  *
@@ -18,8 +17,5 @@ export const submitLogUsingPOST = ApiCommon.requestMaker<
   id: "submitLogUsingPOST",
   path: "/collectors/submit-log",
   verb: "POST",
-  parameters: [
-    { name: "apiToken", required: true, in: "query" },
-    { name: "log", required: true, in: "body" }
-  ]
+  parameters: [{ name: "body", required: true, in: "body" }]
 })

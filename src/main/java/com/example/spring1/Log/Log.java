@@ -1,15 +1,22 @@
 package com.example.spring1.Log;
 
-import com.example.spring1.Client.Client;
-import lombok.Data;
-import org.springframework.data.annotation.CreatedDate;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 
-import javax.persistence.*;
-import java.util.Date;
+import com.example.spring1.Client.Client;
+import com.example.spring1._Common.ModelWithAuditTimestamps;
+
+import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 @Data
 @Entity
-public class Log {
+@EqualsAndHashCode(callSuper = true)
+public class Log extends ModelWithAuditTimestamps {
 
     @Id
     @GeneratedValue
@@ -24,9 +31,6 @@ public class Log {
     private String message;
     // fixme: index this
     private String details;
-
-    @CreatedDate
-    Date createdAt;
 
     @ManyToOne
     private Client client;

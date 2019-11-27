@@ -5,6 +5,7 @@ import { listClientsUsingGET } from "../_api/swagger/modules/ClientController"
 import { formatError } from "../_common/formatError"
 import { listLogsUsingGET } from "../_api/swagger/modules/LogController"
 import { LogListDTO } from "../_api/swagger/api-types"
+import Router from "next/router"
 
 interface Filters {
   client?
@@ -19,9 +20,16 @@ export function useLogs() {
   const [selectedSort, setSelectedSort] = React.useState("*")
   const [logs, setLogs] = React.useState<LogListDTO[]>([])
   const [logsPage, setLogsPage] = React.useState(0)
-  const [selectedLog, setSelectedLog] = React.useState<LogListDTO | null>(null)
+  const [selectedLog, _setSelectedLog] = React.useState<LogListDTO | null>(null)
   const [filter, setFilter] = React.useState<Filters>({})
   const [globalError, setGlobalError] = React.useState("")
+
+  function setSelectedLog(log: LogListDTO | null) {
+    console.log("selected log", log)
+    _setSelectedLog(log)
+    const path = log ? `?id=${log.id}` : ""
+    Router.push("/dashboard" + path)
+  }
 
   React.useEffect(() => {
     listClientsUsingGET({})
@@ -38,7 +46,11 @@ export function useLogs() {
       })
   }, [])
 
-  async function updateLogs(mode: "reset" | "paging"): Promise<void> {
+  async function updateLogs(
+    mode: "reset" | "paging",
+    selectId?: number | undefined
+  ): Promise<void> {
+    console.log("update logs", mode, selectId)
     const page = mode === "reset" ? 0 : logsPage + 1
     const out = await listLogsUsingGET({
       _extraQueryParams: {
@@ -51,6 +63,12 @@ export function useLogs() {
     setLogsPage(out.pageable!.pageNumber! || page)
     if (mode === "reset") {
       setLogs(out.content || [])
+      if (selectId) {
+        const found = (out.content || []).find(x => x.id === selectId)
+        if (found) {
+          setSelectedLog(found)
+        }
+      }
     } else if (mode === "paging") {
       setLogs([...logs, ...(out.content || [])])
     }
@@ -92,23 +110,42 @@ const ALL_CLIENTS_OPTION = {
   key: "*"
 }
 
-export const SORTBY_OPTIONS = [
+const _sortBy_src = [
   {
     text: "Ordenar por...",
-    value: "*",
-    key: "*"
+    value: "*"
   },
   {
     text: "Nível",
-    value: "logLevel",
-    key: "logLevel"
+    value: "logLevel"
   },
   {
     text: "Frequência",
-    value: "count",
-    key: "count"
+    value: "count"
+  },
+  {
+    text: "Data",
+    value: "createdAt"
   }
 ]
+
+export const SORTBY_OPTIONS = _sortBy_src.reduce((out, line) => {
+  if (line.value === "*") {
+    out.push({ ...line, key: line.value })
+    return out
+  }
+  out.push({
+    text: line.text + " +",
+    value: line.value + "|+",
+    key: line.value + "|+"
+  })
+  out.push({
+    text: line.text + " -",
+    value: line.value + "|-",
+    key: line.value + "|-"
+  })
+  return out
+}, [] as { text; value; key }[])
 
 export const SEARCHBY_OPTIONS = [
   {

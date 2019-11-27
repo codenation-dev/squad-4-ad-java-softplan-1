@@ -47,3 +47,33 @@ export const createClientUsingPOST = ApiCommon.requestMaker<
   verb: "POST",
   parameters: [{ name: "client", required: true, in: "body" }]
 })
+
+export type resetTokenUsingPOST_Type = {
+  authenticated?: boolean
+  "authorities[0].authority"?: string
+  clientId: number
+  credentials?: {}
+  details?: {}
+  principal?: {}
+}
+export type resetTokenUsingPOST_Response = Types.ResetTokenDTO
+/**
+ * POST /clients/reset-token
+ *
+ **/
+export const resetTokenUsingPOST = ApiCommon.requestMaker<
+  resetTokenUsingPOST_Type,
+  resetTokenUsingPOST_Response
+>({
+  id: "resetTokenUsingPOST",
+  path: "/clients/reset-token",
+  verb: "POST",
+  parameters: [
+    { name: "authenticated", required: false, in: "query" },
+    { name: "authorities[0].authority", required: false, in: "query" },
+    { name: "clientId", required: true, in: "query" },
+    { name: "credentials", required: false, in: "query" },
+    { name: "details", required: false, in: "query" },
+    { name: "principal", required: false, in: "query" }
+  ]
+})

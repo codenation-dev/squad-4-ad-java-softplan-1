@@ -57,7 +57,7 @@ public class LogService {
     return out;
   }
 
-  public Long submit(String clientToken, Log log) {
+  public Log submit(String clientToken, Log log) {
     Client foundClient = clientRepository.findByapiToken(clientToken);
     if (foundClient == null) {
       throw new RuntimeException("Cliente inválido");
@@ -65,6 +65,6 @@ public class LogService {
     log.setId(null);
     log.setClient(foundClient);
     log = logRepository.save(log);
-    return log.getId();
+    return log;
   }
 }

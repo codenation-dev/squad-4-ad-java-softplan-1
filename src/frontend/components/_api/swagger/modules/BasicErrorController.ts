@@ -2,101 +2,113 @@ import * as ApiCommon from "../api-common"
 // @ts-ignore
 import * as Types from "../api-types"
 
-export type errorUsingGET_Type = {}
-export type errorUsingGET_Response = {}
+export type errorHtmlUsingGET_Type = {}
+export type errorHtmlUsingGET_Response = Types.ModelAndView
 /**
  * GET /error
  *
  **/
-export const errorUsingGET = ApiCommon.requestMaker<errorUsingGET_Type, errorUsingGET_Response>({
-  id: "errorUsingGET",
+export const errorHtmlUsingGET = ApiCommon.requestMaker<
+  errorHtmlUsingGET_Type,
+  errorHtmlUsingGET_Response
+>({
+  id: "errorHtmlUsingGET",
   path: "/error",
   verb: "GET",
   parameters: []
 })
 
-export type errorUsingHEAD_Type = {}
-export type errorUsingHEAD_Response = {}
+export type errorHtmlUsingHEAD_Type = {}
+export type errorHtmlUsingHEAD_Response = Types.ModelAndView
 /**
  * HEAD /error
  *
  **/
-export const errorUsingHEAD = ApiCommon.requestMaker<errorUsingHEAD_Type, errorUsingHEAD_Response>({
-  id: "errorUsingHEAD",
+export const errorHtmlUsingHEAD = ApiCommon.requestMaker<
+  errorHtmlUsingHEAD_Type,
+  errorHtmlUsingHEAD_Response
+>({
+  id: "errorHtmlUsingHEAD",
   path: "/error",
   verb: "HEAD",
   parameters: []
 })
 
-export type errorUsingPOST_Type = {}
-export type errorUsingPOST_Response = {}
+export type errorHtmlUsingPOST_Type = {}
+export type errorHtmlUsingPOST_Response = Types.ModelAndView
 /**
  * POST /error
  *
  **/
-export const errorUsingPOST = ApiCommon.requestMaker<errorUsingPOST_Type, errorUsingPOST_Response>({
-  id: "errorUsingPOST",
+export const errorHtmlUsingPOST = ApiCommon.requestMaker<
+  errorHtmlUsingPOST_Type,
+  errorHtmlUsingPOST_Response
+>({
+  id: "errorHtmlUsingPOST",
   path: "/error",
   verb: "POST",
   parameters: []
 })
 
-export type errorUsingPUT_Type = {}
-export type errorUsingPUT_Response = {}
+export type errorHtmlUsingPUT_Type = {}
+export type errorHtmlUsingPUT_Response = Types.ModelAndView
 /**
  * PUT /error
  *
  **/
-export const errorUsingPUT = ApiCommon.requestMaker<errorUsingPUT_Type, errorUsingPUT_Response>({
-  id: "errorUsingPUT",
+export const errorHtmlUsingPUT = ApiCommon.requestMaker<
+  errorHtmlUsingPUT_Type,
+  errorHtmlUsingPUT_Response
+>({
+  id: "errorHtmlUsingPUT",
   path: "/error",
   verb: "PUT",
   parameters: []
 })
 
-export type errorUsingDELETE_Type = {}
-export type errorUsingDELETE_Response = {}
+export type errorHtmlUsingDELETE_Type = {}
+export type errorHtmlUsingDELETE_Response = Types.ModelAndView
 /**
  * DELETE /error
  *
  **/
-export const errorUsingDELETE = ApiCommon.requestMaker<
-  errorUsingDELETE_Type,
-  errorUsingDELETE_Response
+export const errorHtmlUsingDELETE = ApiCommon.requestMaker<
+  errorHtmlUsingDELETE_Type,
+  errorHtmlUsingDELETE_Response
 >({
-  id: "errorUsingDELETE",
+  id: "errorHtmlUsingDELETE",
   path: "/error",
   verb: "DELETE",
   parameters: []
 })
 
-export type errorUsingOPTIONS_Type = {}
-export type errorUsingOPTIONS_Response = {}
+export type errorHtmlUsingOPTIONS_Type = {}
+export type errorHtmlUsingOPTIONS_Response = Types.ModelAndView
 /**
  * OPTIONS /error
  *
  **/
-export const errorUsingOPTIONS = ApiCommon.requestMaker<
-  errorUsingOPTIONS_Type,
-  errorUsingOPTIONS_Response
+export const errorHtmlUsingOPTIONS = ApiCommon.requestMaker<
+  errorHtmlUsingOPTIONS_Type,
+  errorHtmlUsingOPTIONS_Response
 >({
-  id: "errorUsingOPTIONS",
+  id: "errorHtmlUsingOPTIONS",
   path: "/error",
   verb: "OPTIONS",
   parameters: []
 })
 
-export type errorUsingPATCH_Type = {}
-export type errorUsingPATCH_Response = {}
+export type errorHtmlUsingPATCH_Type = {}
+export type errorHtmlUsingPATCH_Response = Types.ModelAndView
 /**
  * PATCH /error
  *
  **/
-export const errorUsingPATCH = ApiCommon.requestMaker<
-  errorUsingPATCH_Type,
-  errorUsingPATCH_Response
+export const errorHtmlUsingPATCH = ApiCommon.requestMaker<
+  errorHtmlUsingPATCH_Type,
+  errorHtmlUsingPATCH_Response
 >({
-  id: "errorUsingPATCH",
+  id: "errorHtmlUsingPATCH",
   path: "/error",
   verb: "PATCH",
   parameters: []

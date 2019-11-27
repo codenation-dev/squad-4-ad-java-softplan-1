@@ -1,17 +1,22 @@
 package com.example.spring1._Common;
 
 import java.time.LocalDateTime;
+
+import javax.persistence.Column;
 import javax.persistence.MappedSuperclass;
+
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
+
 import lombok.Data;
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.LastModifiedDate;
 
 @Data
 @MappedSuperclass
-abstract class ModelWithAuditTimestamps {
-	@CreatedDate
+public abstract class ModelWithAuditTimestamps {
+	@CreationTimestamp
+	@Column(updatable = false)
 	protected LocalDateTime createdAt;
 
-	@LastModifiedDate
+	@UpdateTimestamp
 	protected LocalDateTime updatedAt;
 }

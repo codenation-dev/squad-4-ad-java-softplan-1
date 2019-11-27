@@ -59,7 +59,7 @@ class RestRequester extends SwaggerRequester {
     const token = this.getSavedAuth()?.access_token
     if (!token) {
       this.clearToken()
-      return {}
+      throw Error("Não autenticado.")
     }
     const url = new URL(BACKEND_URL + request.url)
     const params = Object.assign({}, request.query || {}, input._extraQueryParams || {})
@@ -83,7 +83,7 @@ class RestRequester extends SwaggerRequester {
     if (fetchResp.status == 204) return {}
     if (fetchResp.status == 401) {
       this.clearToken()
-      return {}
+      throw Error("Não autenticado.")
     }
     let jsonResp = {}
     try {

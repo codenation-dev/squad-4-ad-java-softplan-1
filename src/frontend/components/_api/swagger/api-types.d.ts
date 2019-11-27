@@ -1,7 +1,9 @@
 export interface Client {
   apiToken?: string
+  createdAt?: string
   id?: number
   name?: string
+  updatedAt?: string
   users?: User[]
 }
 
@@ -24,18 +26,11 @@ export interface GrantedAuthority {
   authority?: string
 }
 
-export interface Log {
-  client?: Client
+export interface LogCreateDTO {
   code?: string
-  createdAt?: string
   details?: string
-  id?: number
   logLevel?: "ERROR" | "WARN" | "INFO" | "DEBUG" | "TRACE"
   message?: string
-}
-
-export interface LogCreatedDTO {
-  id?: number
 }
 
 export interface LogListDTO {
@@ -163,10 +158,19 @@ export interface Page_LogListDTO_ {
   totalPages?: number
 }
 
+export interface ResetTokenDTO {
+  apiToken?: string
+}
+
 export interface Sort {
   empty?: boolean
   sorted?: boolean
   unsorted?: boolean
+}
+
+export interface SubmitLogDTO {
+  apiToken?: string
+  log?: LogCreateDTO
 }
 
 export interface User {
@@ -174,12 +178,14 @@ export interface User {
   accountNonLocked?: boolean
   authorities?: GrantedAuthority[]
   clients?: Client[]
+  createdAt?: string
   credentialsNonExpired?: boolean
   displayName?: string
   email?: string
   enabled?: boolean
   id?: number
   password?: string
+  updatedAt?: string
   username?: string
 }
 

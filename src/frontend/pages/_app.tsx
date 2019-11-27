@@ -2,6 +2,7 @@ import React from "react"
 import App from "next/app"
 
 import "../components/_api/requester"
+import "../components/Settings/Settings.scss"
 
 class MyApp extends App {
   // Only uncomment this method if you have blocking data requirements for

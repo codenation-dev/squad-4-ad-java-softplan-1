@@ -5,17 +5,22 @@ import { patchUserSelfUsingPATCH } from "../_api/swagger/modules/UserController"
 import { formatError } from "../_common/formatError"
 import { showToast } from "../_common/ToastService"
 import { userContext } from "../_common/Wireframe"
-import { createClientUsingPOST } from "../_api/swagger/modules/ClientController"
+import {
+  createClientUsingPOST,
+  resetTokenUsingPOST
+} from "../_api/swagger/modules/ClientController"
+
+type ModalTypes = "token" | "remove" | "newclient" | "resetToken"
 
 export function ClientList() {
   const ctx = useContext(userContext)
   const clients = ctx.user.clients
   const [showModal, setShowModal] = useState<null | {
     client: ClientDetailDTO
-    modalType: "token" | "remove" | "newclient"
+    modalType: ModalTypes
   }>(null)
 
-  function activateModal(modalType: "token" | "remove" | "newclient", client: ClientDetailDTO) {
+  function activateModal(modalType: ModalTypes, client: ClientDetailDTO) {
     return ev => {
       setShowModal({ modalType, client })
     }
@@ -64,6 +69,17 @@ export function ClientList() {
     }
   }
 
+  async function confirmTokenReset(client: ClientDetailDTO) {
+    try {
+      setShowModal(null)
+      await resetTokenUsingPOST({ clientId: client.id! })
+      ctx.refresh()
+      showToast("success", "Chave recriada com sucesso.")
+    } catch (err) {
+      showToast("error", formatError(err))
+    }
+  }
+
   if (!clients) return null
 
   return (
@@ -88,7 +104,12 @@ export function ClientList() {
                 <div className="_action ui basic button" onClick={activateModal("token", client)}>
                   Ver token
                 </div>
-                <div className="_action ui basic button">Redefinir token</div>
+                <div
+                  className="_action ui basic button"
+                  onClick={activateModal("resetToken", client)}
+                >
+                  Redefinir token
+                </div>
                 <div
                   className="_action ui negative basic button"
                   onClick={activateModal("remove", client)}
@@ -114,6 +135,9 @@ export function ClientList() {
       {showModal && showModal.modalType === "newclient" && (
         <NewClientModal onConfirm={confirmNewClient} onCancel={closeModal} />
       )}
+      {showModal && showModal.modalType === "resetToken" && (
+        <ResetTokenModal client={showModal.client} onCancel={close} onConfirm={confirmTokenReset} />
+      )}
     </div>
   )
 }
@@ -129,6 +153,27 @@ function TokenModal(i: { client: ClientDetailDTO; onClose: () => void }) {
         <Button color="green" onClick={i.onClose}>
           <Icon name="checkmark" /> OK
         </Button>
+      </Modal.Actions>
+    </Modal>
+  )
+}
+
+function ResetTokenModal(i: {
+  client: ClientDetailDTO
+  onCancel: () => void
+  onConfirm: (c: ClientDetailDTO) => any
+}) {
+  return (
+    <Modal open={true} size="small">
+      <Header content="Gerar novo token"></Header>
+      <Modal.Content>
+        <p>Gerar novo token pra este cliente?</p>
+      </Modal.Content>
+      <Modal.Actions>
+        <Button color="green" onClick={() => i.onConfirm(i.client)}>
+          OK
+        </Button>
+        <Button onClick={i.onCancel}>Cancelar</Button>
       </Modal.Actions>
     </Modal>
   )
