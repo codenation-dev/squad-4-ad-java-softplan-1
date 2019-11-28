@@ -4,7 +4,7 @@ Aplicativo de registro de logs, à la [Sentry](https://sentry.io/welcome/). OK, 
 
 - API REST feita com Spring Boot
 - Frontend feito com next.js (react/typescript)
-- Exemplo em [aceleralog.herokuapp.com](https://aceleralog.herokuapp.com)
+- Exemplo em [aceleralog.now.sh](https://aceleralog.now.sh)
 
 ## Instalação backend
 
