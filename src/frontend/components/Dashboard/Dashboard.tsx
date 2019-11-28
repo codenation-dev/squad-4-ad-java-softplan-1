@@ -1,15 +1,17 @@
-import React, { useEffect } from "react"
+import React, { useEffect, useContext } from "react"
 import { Wireframe } from "../_common/Wireframe"
-import { useLogs } from "./useLogs"
 import { SearchBar } from "./SearchBar"
 import { LogsList } from "./LogsList"
 import { showToastC } from "../_common/ToastService"
 import { Detail } from "../Detail/Detail"
+import { logContext, LogsState } from "./LogsContext"
 
 export function Dashboard(initial: { id?: number }) {
   return (
     <Wireframe title="Painel">
-      <Content initialSelectedLog={initial.id} />
+      <LogsState>
+        <Content initialSelectedLog={initial.id} />
+      </LogsState>
     </Wireframe>
   )
 }
@@ -19,7 +21,7 @@ Dashboard.getInitialProps = async ({ query }) => {
 }
 
 function Content({ initialSelectedLog = undefined as undefined | number }) {
-  const data = useLogs()
+  const data = useContext(logContext)
   React.useEffect(() => {
     console.log("initial", initialSelectedLog)
     data.updateLogs("reset", initialSelectedLog).catch(showToastC("error"))
@@ -35,10 +37,10 @@ function Content({ initialSelectedLog = undefined as undefined | number }) {
         }
       `}</style>
       <h1 className="ui header">Logs</h1>
-      <SearchBar data={data} />
+      <SearchBar />
       <div className="columns">
-        <LogsList data={data} />
-        {data.selectedLog && <Detail data={data} />}
+        <LogsList />
+        {data.selectedLog && <Detail />}
       </div>
     </div>
   )

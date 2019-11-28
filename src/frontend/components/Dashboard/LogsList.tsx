@@ -1,14 +1,14 @@
-import React from "react"
-import { Model } from "./useLogs"
+import React, { useContext } from "react"
 import { Segment, Label, Message, Header, Icon } from "semantic-ui-react"
 import immer from "immer"
 import dayjs from "dayjs"
 import { LogLevelLabel } from "../_common/LogLevelLabel"
 import { LogListDTO } from "../_api/swagger/api-types"
+import { logContext } from "./LogsContext"
 
-export function LogsList(i: { data: Model }) {
-  const { data } = i
-  const logs = data.logs as (typeof data.logs[0] & { _selected: boolean })[]
+export function LogsList() {
+  const data = useContext(logContext)
+  const logs = data.logs
   const handleSelect = React.useCallback(
     (idx: number) => {
       return ev => {

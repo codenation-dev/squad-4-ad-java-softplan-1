@@ -56,6 +56,7 @@ class RestRequester extends SwaggerRequester {
     input: Record<string, any> & GApiCommon.MergeToRequest,
     operation: IOperation
   ) {
+    console.log("handler", request, input)
     const token = this.getSavedAuth()?.access_token
     if (!token) {
       this.clearToken()
@@ -79,7 +80,7 @@ class RestRequester extends SwaggerRequester {
       body,
       headers
     })
-    console.log("fetchresp", request, fetchResp.status)
+    // console.log("fetchresp", request, fetchResp.status)
     if (fetchResp.status == 204) return {}
     if (fetchResp.status == 401) {
       this.clearToken()
@@ -87,9 +88,9 @@ class RestRequester extends SwaggerRequester {
     }
     let jsonResp = {}
     try {
-      console.log("parsing", request)
+      // console.log("parsing", request)
       jsonResp = await fetchResp.json()
-      console.log("parsed", request, jsonResp)
+      // console.log("parsed", request, jsonResp)
     } catch (err) {
       // console.error("parse error at", request, err)
     }

@@ -1,64 +1,89 @@
-import React from "react"
+import React, { useState, useRef, useContext } from "react"
 import { Dropdown, Input, Button } from "semantic-ui-react"
-import { Model, SORTBY_OPTIONS, SEARCHBY_OPTIONS } from "./useLogs"
-export function SearchBar(i: { data: Model }) {
-  const { data } = i
-  const handleClientChange = React.useCallback(ev => {}, [])
-  const handleSortChange = React.useCallback(ev => {}, [])
-  const handleSearchFormSubmit = React.useCallback(ev => {
-    ev.preventDefault()
-    ev.stopPropagation()
-  }, [])
-  return (
-    <>
-      <style jsx>{`
-        #_grow {
-          flex-grow: 1;
-        }
-        #_grow form {
-          display: flex;
-          flex-grow: 1;
-        }
-      `}</style>
-      <div className="ui menu stackable" style={{ flexWrap: "wrap" }}>
-        <div className="item">
-          <Dropdown
-            selection
-            search
-            options={data.clients}
-            value={data.selectedClient}
-            onChange={handleClientChange}
-          />
-        </div>
-        <div className="item">
-          <Dropdown
-            selection
-            options={SORTBY_OPTIONS}
-            value={data.selectedSort}
-            onChange={handleSortChange}
-          />
-        </div>
+import {
+  SORTBY_OPTIONS,
+  SEARCHBY_OPTIONS,
+  LOGLEVEL_OPTIONS,
+  SearchParams,
+  logContext
+} from "./LogsContext"
+import { useFormik } from "formik"
+import { FormHelper } from "../_common/FormHelper"
 
-        <div className="item" id="_grow">
-          <form onSubmit={handleSearchFormSubmit}>
-            <Input
-              className="search-input"
-              placeholder="Buscar..."
-              action
-              style={{ display: "flex", width: "100%" }}
-            >
-              <input style={{ flexGrow: 1 }} />
-              <Dropdown
-                selection
-                options={SEARCHBY_OPTIONS}
-                defaultValue="*"
-                style={{ minWidth: "100px" }}
-              />
-              <Button type="submit" icon="search"></Button>
-            </Input>
-          </form>
-        </div>
+export function SearchBar() {
+  const data = useContext(logContext)
+
+  const bag = useFormik({
+    initialValues: {
+      selectedClient: "*",
+      sortBy: "*",
+      logLevel: "*",
+      text: "",
+      searchBy: "*"
+    },
+    onSubmit(value: SearchParams) {
+      data.setSearchParams(value)
+    }
+  })
+
+  const searchBy = bag.values.searchBy
+
+  const h = new FormHelper(bag)
+
+  return (
+    <form
+      id="search-form"
+      className="ui menu stackable"
+      style={{ flexWrap: "wrap" }}
+      onSubmit={bag.handleSubmit}
+    >
+      <div className="item">
+        <Dropdown
+          selection
+          search
+          options={data.clients}
+          {...h.bindInputSemantic("selectedClient")}
+        />
       </div>
-    </>
+      <div className="item">
+        <Dropdown selection options={SORTBY_OPTIONS} {...h.bindInputSemantic("sortBy")} />
+      </div>
+
+      <div className="item _grow">
+        <Input
+          className="search-input"
+          placeholder="Buscar..."
+          action
+          style={{ display: "flex", width: "100%" }}
+        >
+          {searchBy !== "logLevel" && (
+            <input name="text" className="_noBorder right" {...h.bindInput("text")} />
+          )}
+          {searchBy === "logLevel" && (
+            <Dropdown
+              selection
+              name="logLevel"
+              options={LOGLEVEL_OPTIONS}
+              className="_grow _noBorder right"
+              {...h.bindInputSemantic("logLevel")}
+            />
+          )}
+          <Dropdown
+            selection
+            name="searchBy"
+            options={SEARCHBY_OPTIONS}
+            style={{ minWidth: "100px" }}
+            {...h.bindInputSemantic("searchBy")}
+          />
+          <Button type="submit" icon="search"></Button>
+        </Input>
+      </div>
+    </form>
   )
+}
+
+interface FormValues {
+  logLevel
+  searchBy
+  text
 }

@@ -1,10 +1,11 @@
 import { Button, Icon, Header, Segment, List } from "semantic-ui-react"
-import { Model } from "../Dashboard/useLogs"
 import dayjs from "dayjs"
 import { LogLevelLabel } from "../_common/LogLevelLabel"
-import React from "react"
+import React, { useContext } from "react"
+import { logContext } from "../Dashboard/LogsContext"
 
-export function Detail({ data }: { data: Model }) {
+export function Detail() {
+  const data = useContext(logContext)
   const selected = data.selectedLog
   if (!selected) return null
   const back = React.useCallback(() => {

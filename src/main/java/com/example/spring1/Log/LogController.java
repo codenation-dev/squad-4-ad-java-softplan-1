@@ -25,11 +25,13 @@ public class LogController {
   Page<LogListDTO> listLogs(@RequestParam(required = false) Long clientId,
       @RequestParam(required = false) LogLevel logLevel, @RequestParam(required = false) String code,
       @RequestParam(required = false) LocalDateTime createdAt_gt,
-      @RequestParam(required = false) LocalDateTime createdAt_lt, Authentication auth, Pageable pageable) {
+      @RequestParam(required = false) LocalDateTime createdAt_lt, @RequestParam(required = false) String message,
+      Authentication auth, Pageable pageable) {
     LogFilterParams params = new LogFilterParams();
     params.clientId = clientId;
     params.logLevel = logLevel;
     params.code = code;
+    params.message = message;
     params.createdAt_gt = createdAt_gt;
     params.createdAt_lt = createdAt_lt;
     User user = (User) auth.getPrincipal();

@@ -54,29 +54,31 @@ export const authorizeUsingHEAD = ApiCommon.requestMaker<
   ]
 })
 
-export type authorizeUsingPOST_Type = {
+export type approveOrDenyUsingPOST_Type = {
+  approvalParameters: any
   complete?: boolean
   model?: {}
   name?: string
-  parameters: any
+  user_oauth_approval: string
 }
-export type authorizeUsingPOST_Response = Types.ModelAndView
+export type approveOrDenyUsingPOST_Response = Types.View
 /**
  * POST /oauth/authorize
  *
  **/
-export const authorizeUsingPOST = ApiCommon.requestMaker<
-  authorizeUsingPOST_Type,
-  authorizeUsingPOST_Response
+export const approveOrDenyUsingPOST = ApiCommon.requestMaker<
+  approveOrDenyUsingPOST_Type,
+  approveOrDenyUsingPOST_Response
 >({
-  id: "authorizeUsingPOST",
+  id: "approveOrDenyUsingPOST",
   path: "/oauth/authorize",
   verb: "POST",
   parameters: [
+    { name: "approvalParameters", required: true, in: "query" },
     { name: "complete", required: false, in: "query" },
     { name: "model", required: false, in: "query" },
     { name: "name", required: false, in: "query" },
-    { name: "parameters", required: true, in: "query" }
+    { name: "user_oauth_approval", required: true, in: "query" }
   ]
 })
 

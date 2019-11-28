@@ -35,6 +35,9 @@ public class LogService {
     if (filter.code != null) {
       builder = builder.and(qLog.code.like(filter.code));
     }
+    if (filter.message != null) {
+      builder = builder.and(qLog.message.like(filter.message));
+    }
     if (filter.logLevel != null) {
       builder = builder.and(qLog.logLevel.eq(filter.logLevel));
     }
@@ -49,7 +52,7 @@ public class LogService {
     // mapear
     ModelMapper modelMapper = new ModelMapper();
 
-    // JAVA TENTANDO TER FP KKKKKKKKKKKKKKKKKKKKk
+    // JAVA TENTANDO TER FP KKKKKKKKKKKKKKKKKKKKkj
     Function<Log, LogListDTO> mapper = log -> {
       return modelMapper.map(log, LogListDTO.class);
     };

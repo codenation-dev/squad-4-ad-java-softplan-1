@@ -12,6 +12,7 @@ export type listLogsUsingGET_Type = {
   credentials?: {}
   details?: {}
   logLevel?: string
+  message?: string
   offset?: number
   paged?: boolean
   pageNumber?: number
@@ -43,6 +44,7 @@ export const listLogsUsingGET = ApiCommon.requestMaker<
     { name: "credentials", required: false, in: "query" },
     { name: "details", required: false, in: "query" },
     { name: "logLevel", required: false, in: "query" },
+    { name: "message", required: false, in: "query" },
     { name: "offset", required: false, in: "query" },
     { name: "paged", required: false, in: "query" },
     { name: "pageNumber", required: false, in: "query" },
