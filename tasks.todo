@@ -1,8 +1,16 @@
   ✔ Revisar DTOs de usuário @done (24/11/2019 18:35:05)
   ✔ Redefinir token @done (27/11/2019 04:20:16)
-  ☐ Filtros
+
+  ✔ filtros com "LIKE" não estão funcionando @done (28/11/2019 18:36:42)
   ☐ Agrupamento
   
   ☐ Validação
   ☐ Limitar permissões de usuário pra um nível admin
+  ☐ fluxo de cadastro de novo usuário
+  ☐ alteração de senha de usuário
+  ☐ validação de POST body
+  ☐ formatação de erros da API
+  ☐ testes de integração
+  ☐ textos da documentação, ocultar rotas que não interessam do swagger
   ☐ Como ocultar erros na produção? (fora do escopo)
+  
