@@ -1,0 +1,8 @@
+{
+  "name": "aceleralog",
+  "build": {
+    "env": {
+      "BACKEND_URL": "@backend_url"
+    }
+  }
+}

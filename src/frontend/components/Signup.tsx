@@ -44,28 +44,19 @@ function SignupForm() {
         return (
           <form className="ui large form" onSubmit={ctrl.handleSubmit}>
             <div className="ui stacked segment">
-              <Form.Field {...h.bindField("username")}>
-                <Input
-                  type="text"
-                  placeholder="Usuário"
-                  {...h.bindInput("username")}
-                  iconPosition="left"
-                  icon="user"
-                />
-                {h.errorMessage("username")}
-              </Form.Field>
-              <Form.Field {...h.bindField("password")}>
-                <Input type="password" placeholder="Senha" {...h.bindInput("password")} />
-                {h.errorMessage("password")}
-              </Form.Field>
-              <Form.Field {...h.bindField("repeatPassword")}>
-                <Input
-                  type="password"
-                  placeholder="Repetir senha"
-                  {...h.bindInput("repeatPassword")}
-                />
-                {h.errorMessage("repeatPassword")}
-              </Form.Field>
+              <Form.Input
+                type="text"
+                placeholder="Usuário"
+                iconPosition="left"
+                icon="user"
+                {...h.bindInput("username")}
+              />
+              <Form.Input type="password" placeholder="Senha" {...h.bindInput("password")} />
+              <Form.Input
+                type="password"
+                placeholder="Repetir senha"
+                {...h.bindInput("repeatPassword")}
+              />
               <button className="ui large fluid button" type="submit">
                 Concluído
               </button>

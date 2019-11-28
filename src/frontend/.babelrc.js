@@ -1,3 +1,4 @@
+console.log("babelrc BACKEND_URL", process.env.BACKEND_URL || "http://localhost:8080")
 module.exports = {
   presets: ["next/babel"],
   plugins: [
