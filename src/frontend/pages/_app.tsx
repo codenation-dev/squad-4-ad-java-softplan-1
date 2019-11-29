@@ -2,6 +2,7 @@ import React from "react"
 import App from "next/app"
 
 import "../components/_api/requester"
+import "../components/Dashboard/Dashboard.scss"
 import "../components/Settings/Settings.scss"
 import "../components/Dashboard/SearchBar.scss"
 

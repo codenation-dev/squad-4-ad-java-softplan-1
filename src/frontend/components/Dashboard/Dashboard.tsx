@@ -6,6 +6,7 @@ import { logContext, LogsContext } from "./LogsContext"
 import { LogsList } from "./LogsList"
 import { LogsListGrouped } from "./LogsListGrouped"
 import { SearchBar } from "./SearchBar"
+import classNames from "classnames"
 
 export function Dashboard(initial: { id?: number }) {
   return (
@@ -37,13 +38,6 @@ function Content({ initialSelectedLog = undefined as undefined | number }) {
 
   return (
     <div className="ui container">
-      <style jsx>{`
-        .columns {
-          display: flex;
-          flex-direction: row;
-          justify-content: center;
-        }
-      `}</style>
       <h1 className="ui header">
         Logs
         <Checkbox
@@ -55,7 +49,7 @@ function Content({ initialSelectedLog = undefined as undefined | number }) {
         />
       </h1>
       <SearchBar />
-      <div className="columns">
+      <div className={classNames("columns", data.selectedLog && "with-detail")}>
         {data.showGrouped ? <LogsListGrouped /> : <LogsList />}
         {data.selectedLog && <Detail />}
       </div>

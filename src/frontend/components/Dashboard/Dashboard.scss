@@ -1,0 +1,16 @@
+.columns {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+@media (max-width: 600px) {
+  .with-detail {
+    .list {
+      display: none;
+    }
+    .detail {
+      min-width: 100% !important;
+      margin: 0 !important;
+    }
+  }
+}
