@@ -34,7 +34,7 @@ public class Swagger {
   private ApiInfo apiInfo() {
     return new ApiInfo(
       "Aceleralog",
-      "Serviço coletor de logs.",
+      "Serviço coletor de logs. [aceleralog.now.sh](https://aceleralog.now.sh/)",
       "1.0.0",
       null,
       null,

@@ -36,6 +36,10 @@ public class SwaggerManualApiPlugin implements ApiListingScannerPlugin {
               .codegenMethodNameStem("getOauthToken") //<3>
               .method(HttpMethod.POST)
               .tags(tags)
+              .summary("oauthPostToken")
+              .notes(
+                "Autenticar segundo o padrão OAuth2 usando o fluxo \"Resource Owner Password Credentials\"."
+              )
               // .parameters(
               //     Collections.singletonList( //<4>
               //         new ParameterBuilder()

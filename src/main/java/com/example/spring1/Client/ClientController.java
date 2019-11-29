@@ -4,6 +4,7 @@ import com.example.spring1.Client.dto.ClientCreateDTO;
 import com.example.spring1.Client.dto.ClientDetailDTO;
 import com.example.spring1.Client.dto.ResetTokenDTO;
 import com.example.spring1.User.User;
+import io.swagger.annotations.Api;
 import java.util.List;
 import lombok.AllArgsConstructor;
 import org.springframework.security.core.Authentication;
@@ -17,6 +18,9 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @AllArgsConstructor
 @RequestMapping("/clients")
+@Api(
+  description = "Cada aplicação distinta que consume o serviço de log é um Cliente.\nEx: Meu produto - dev, Meu produto - prod."
+)
 public class ClientController {
   private ClientService clientService;
 

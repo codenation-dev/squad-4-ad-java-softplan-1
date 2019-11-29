@@ -4,6 +4,8 @@ import com.example.spring1._Common.Exceptions.NotFoundException;
 import com.example.spring1.Log.dto.LogListDTO;
 import com.example.spring1.Log.dto.LogListGroupedDTO;
 import com.example.spring1.User.User;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import java.time.LocalDateTime;
 import java.util.List;
 import lombok.AllArgsConstructor;
@@ -19,6 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @AllArgsConstructor
 @RequestMapping("/logs")
+@Api(description = "API privada de consulta de logs consumida pela interface de Admin.")
 public class LogController {
   private final LogService logService;
 
@@ -55,6 +58,7 @@ public class LogController {
     return logService.listLogs(user, pageable, params);
   }
 
+  @ApiOperation(value = "listLogsGrouped", notes = "Agrupa por código, mensagem e dia.")
   @GetMapping("/grouped")
   List<LogListGroupedDTO> listLogsGrouped(
     @RequestParam(required = false) Long clientId,

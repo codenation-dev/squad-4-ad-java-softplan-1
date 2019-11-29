@@ -2,6 +2,7 @@ package com.example.spring1.User;
 
 import com.example.spring1.User.dto.UserDetailDTO;
 import com.example.spring1.User.dto.UserPatchDTO;
+import io.swagger.annotations.Api;
 import lombok.AllArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/users")
 @AllArgsConstructor
+@Api(description = "Informações e operações de usuário.")
 public class UserController {
   private final UserService userService;
 
