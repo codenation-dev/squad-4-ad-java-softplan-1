@@ -2,15 +2,18 @@
   ✔ Redefinir token @done (27/11/2019 04:20:16)
 
   ✔ filtros com "LIKE" não estão funcionando @done (28/11/2019 18:36:42)
-  ☐ Agrupamento
+  ✔ Agrupamento @done (11/29/2019, 2:16:28 PM)
+  ✔ ocultar rotas que não interessam do swagger @done (11/29/2019, 2:16:30 PM)
   
-  ☐ textos da documentação, ocultar rotas que não interessam do swagger
+  ☐ textos da documentação
   ☐ Validação
   ☐ validação de POST body
   ☐ Índices
   ☐ fluxo de cadastro de novo usuário
   ☐ alteração de senha de usuário
   ☐ formatação de erros da API
+
+Não vai acontecer:
   ☐ testes de integração
   ☐ Limitar permissões de usuário pra um nível admin
   
