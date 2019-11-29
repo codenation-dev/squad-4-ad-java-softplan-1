@@ -2,17 +2,22 @@ import * as ApiCommon from "../api-common"
 // @ts-ignore
 import * as Types from "../api-types"
 
-export type listUsingGET_Type = {}
-export type listUsingGET_Response = Types.UserListDTO[]
+export type createUserInsecureUsingPOST_Type = {
+  input: Types.UserCreateInsecureDTO
+}
+export type createUserInsecureUsingPOST_Response = Types.UserDetailDTO
 /**
- * GET /users
+ * POST /users/public
  *
  **/
-export const listUsingGET = ApiCommon.requestMaker<listUsingGET_Type, listUsingGET_Response>({
-  id: "listUsingGET",
-  path: "/users",
-  verb: "GET",
-  parameters: []
+export const createUserInsecureUsingPOST = ApiCommon.requestMaker<
+  createUserInsecureUsingPOST_Type,
+  createUserInsecureUsingPOST_Response
+>({
+  id: "createUserInsecureUsingPOST",
+  path: "/users/public",
+  verb: "POST",
+  parameters: [{ name: "input", required: true, in: "body" }]
 })
 
 export type selfUsingGET_Type = {

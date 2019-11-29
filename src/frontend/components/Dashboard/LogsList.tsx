@@ -1,9 +1,9 @@
-import React, { useContext } from "react"
-import { Segment, Label, Message, Header, Icon } from "semantic-ui-react"
-import immer from "immer"
 import dayjs from "dayjs"
-import { LogLevelLabel } from "../_common/LogLevelLabel"
+import immer from "immer"
+import React, { useContext } from "react"
+import { Header, Icon, Segment } from "semantic-ui-react"
 import { LogListDTO } from "../_api/swagger/api-types"
+import { LogLevelLabel } from "../_common/LogLevelLabel"
 import { logContext } from "./LogsContext"
 
 export function LogsList() {

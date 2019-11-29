@@ -1,5 +1,3 @@
-import { FormikProps } from "formik"
-
 interface WithValues<Values> {
   values: Values
   handleChange: (ev: any) => any

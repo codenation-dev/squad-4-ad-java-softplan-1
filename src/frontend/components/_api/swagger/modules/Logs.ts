@@ -86,6 +86,7 @@ export type listLogsGroupedUsingGET_Response = Types.LogListGroupedDTO[]
 /**
  * GET /logs/grouped
  *
+ * Agrupa por código, mensagem e dia.
  **/
 export const listLogsGroupedUsingGET = ApiCommon.requestMaker<
   listLogsGroupedUsingGET_Type,

@@ -7,8 +7,8 @@
   
   ☐ textos da documentação
   ✔ Validação @done (29/11/2019 19:37:09)
-  ☐ validação de POST body
-  ☐ Índices
+  ✔ validação de POST body @done (29/11/2019 20:00:38)
+  ✔ Índices @done (29/11/2019 20:00:42)
   ☐ fluxo de cadastro de novo usuário
   ☐ alteração de senha de usuário
   ☐ formatação de erros da API

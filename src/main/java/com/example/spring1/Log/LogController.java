@@ -21,7 +21,10 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @AllArgsConstructor
 @RequestMapping("/logs")
-@Api(description = "API privada de consulta de logs consumida pela interface de Admin.")
+@Api(
+  tags = { "logs" },
+  description = "API privada de consulta de logs consumida pela interface de Admin."
+)
 public class LogController {
   private final LogService logService;
 

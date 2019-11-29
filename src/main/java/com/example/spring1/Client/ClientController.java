@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 @AllArgsConstructor
 @RequestMapping("/clients")
 @Api(
+  tags = { "clients" },
   description = "Cada aplicação distinta que consume o serviço de log é um Cliente.\nEx: Meu produto - dev, Meu produto - prod."
 )
 public class ClientController {

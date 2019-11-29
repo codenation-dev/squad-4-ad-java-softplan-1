@@ -2,7 +2,7 @@ import React from "react"
 import Head from "next/head"
 import { Dropdown, Divider, Menu } from "semantic-ui-react"
 import { UserDetailDTO } from "../_api/swagger/api-types"
-import { selfUsingGET } from "../_api/swagger/modules/UserController"
+import { selfUsingGET } from "../_api/swagger/modules/Users"
 import Link from "next/link"
 
 const initialUserContext = {

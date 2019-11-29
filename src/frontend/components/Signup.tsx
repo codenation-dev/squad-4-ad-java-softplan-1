@@ -1,8 +1,7 @@
-import Link from "next/link"
-import * as yup from "yup"
 import { Formik } from "formik"
+import { Form } from "semantic-ui-react"
+import * as yup from "yup"
 import { FormHelper } from "./_common/FormHelper"
-import { Input, Segment, Form } from "semantic-ui-react"
 
 export function Signup() {
   return (

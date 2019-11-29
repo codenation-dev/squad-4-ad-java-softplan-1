@@ -1,8 +1,7 @@
 package com.example.spring1.User;
 
-import com.example.spring1.Client.Client;
 import com.example.spring1._Common.ModelWithAuditTimestamps;
-
+import com.example.spring1.Client.Client;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -19,7 +18,6 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -56,7 +54,10 @@ public class User extends ModelWithAuditTimestamps implements UserDetails {
   private String password;
 
   @ManyToMany
-  @JoinTable(joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "client_id"))
+  @JoinTable(
+    joinColumns = @JoinColumn(name = "user_id"),
+    inverseJoinColumns = @JoinColumn(name = "client_id")
+  )
   private List<Client> clients;
 
   // @ElementCollection

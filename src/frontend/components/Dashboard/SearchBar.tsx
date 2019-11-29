@@ -1,14 +1,14 @@
-import React, { useState, useRef, useContext } from "react"
-import { Dropdown, Input, Button } from "semantic-ui-react"
-import {
-  SORTBY_OPTIONS,
-  SEARCHBY_OPTIONS,
-  LOGLEVEL_OPTIONS,
-  SearchParams,
-  logContext
-} from "./LogsContext"
 import { useFormik } from "formik"
+import React, { useContext } from "react"
+import { Button, Dropdown, Input } from "semantic-ui-react"
 import { FormHelper } from "../_common/FormHelper"
+import {
+  logContext,
+  LOGLEVEL_OPTIONS,
+  SEARCHBY_OPTIONS,
+  SearchParams,
+  SORTBY_OPTIONS
+} from "./LogsContext"
 
 export function SearchBar() {
   const data = useContext(logContext)

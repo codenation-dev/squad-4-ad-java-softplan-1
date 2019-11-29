@@ -1,7 +1,7 @@
 import dayjs from "dayjs"
 import React, { useContext } from "react"
 import { Header, Icon, Segment } from "semantic-ui-react"
-import { LogListDTO, LogListGroupedDTO } from "../_api/swagger/api-types"
+import { LogListGroupedDTO } from "../_api/swagger/api-types"
 import { LogLevelLabel } from "../_common/LogLevelLabel"
 import { logContext } from "./LogsContext"
 

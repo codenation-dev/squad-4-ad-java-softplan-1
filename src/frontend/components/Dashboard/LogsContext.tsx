@@ -2,12 +2,12 @@ import Router from "next/router"
 import React, { createContext } from "react"
 import { DropdownItemProps } from "semantic-ui-react"
 import { LogListDTO, LogListGroupedDTO } from "../_api/swagger/api-types"
-import { listClientsUsingGET } from "../_api/swagger/modules/ClientController"
+import { listClientsUsingGET } from "../_api/swagger/modules/Clients"
 import {
   listLogsUsingGET,
   listLogsGroupedUsingGET,
   getLogUsingGET
-} from "../_api/swagger/modules/LogController"
+} from "../_api/swagger/modules/Logs"
 import { formatError } from "../_common/formatError"
 import { showToast } from "../_common/ToastService"
 

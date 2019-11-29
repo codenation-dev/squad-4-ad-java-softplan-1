@@ -1,14 +1,11 @@
 import { useContext, useState, useRef, useCallback } from "react"
 import { Button, Header, Icon, Message, Modal, Segment, Form } from "semantic-ui-react"
 import { ClientDetailDTO } from "../_api/swagger/api-types"
-import { patchUserSelfUsingPATCH } from "../_api/swagger/modules/UserController"
+import { patchUserSelfUsingPATCH } from "../_api/swagger/modules/Users"
 import { formatError } from "../_common/formatError"
 import { showToast } from "../_common/ToastService"
 import { userContext } from "../_common/Wireframe"
-import {
-  createClientUsingPOST,
-  resetTokenUsingPOST
-} from "../_api/swagger/modules/ClientController"
+import { createClientUsingPOST, resetTokenUsingPOST } from "../_api/swagger/modules/Clients"
 
 type ModalTypes = "token" | "remove" | "newclient" | "resetToken"
 

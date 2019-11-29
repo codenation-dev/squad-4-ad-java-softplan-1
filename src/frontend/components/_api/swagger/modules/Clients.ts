@@ -9,7 +9,7 @@ export type listClientsUsingGET_Type = {
   details?: {}
   principal?: {}
 }
-export type listClientsUsingGET_Response = Types.ClientShortDTO[]
+export type listClientsUsingGET_Response = Types.ClientDetailDTO[]
 /**
  * GET /clients
  *
@@ -33,7 +33,7 @@ export const listClientsUsingGET = ApiCommon.requestMaker<
 export type createClientUsingPOST_Type = {
   client: Types.ClientCreateDTO
 }
-export type createClientUsingPOST_Response = Types.Client
+export type createClientUsingPOST_Response = Types.ClientDetailDTO
 /**
  * POST /clients
  *

@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/collectors")
 @AllArgsConstructor
-@Api(description = "API pública de envio de log.")
+@Api(tags = { "collectors" }, description = "API pública de envio de log.")
 public class CollectorsController {
   private final LogService logService;
   private final MapperService mapper;
