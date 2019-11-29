@@ -1,16 +1,13 @@
 package com.example.spring1.Client;
 
+import com.example.spring1._Common.MapperService;
 import com.example.spring1.Client.dto.ClientCreateDTO;
 import com.example.spring1.Client.dto.ClientShortDTO;
 import com.example.spring1.User.User;
-import com.example.spring1._Common.MapperService;
-
 import java.util.List;
-import java.util.UUID;
 import java.util.stream.Collectors;
-
+import java.util.UUID;
 import lombok.AllArgsConstructor;
-
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
@@ -51,9 +48,23 @@ public class ClientService {
   List<ClientShortDTO> list(User user) {
     ModelMapper mapper = mapperService.getMapper();
     List<Client> clients = this.clientRepository.findByUsers_Id(user.getId());
-    return clients.stream().map(client -> {
-      return mapper.map(client, ClientShortDTO.class);
-    }).collect(Collectors.toList());
+    return clients
+      .stream()
+      .map(
+        client -> {
+          return mapper.map(client, ClientShortDTO.class);
+        }
+      )
+      .collect(Collectors.toList());
+  }
+
+  public ClientShortDTO getShortById(Long id) {
+    Client client = clientRepository.getOne(id);
+    return this.mapperService.getMapper().map(client, ClientShortDTO.class);
+  }
+
+  public Client getByApiToken(String apiToken) {
+    return clientRepository.findByapiToken(apiToken);
   }
 
   Boolean userHasAccess(Long userId, Long clientId) {

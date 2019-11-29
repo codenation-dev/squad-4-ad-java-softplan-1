@@ -1,17 +1,18 @@
-import React, { useEffect, useContext } from "react"
-import { Wireframe } from "../_common/Wireframe"
-import { SearchBar } from "./SearchBar"
-import { LogsList } from "./LogsList"
-import { showToastC } from "../_common/ToastService"
+import React, { useContext } from "react"
+import { Checkbox } from "semantic-ui-react"
 import { Detail } from "../Detail/Detail"
-import { logContext, LogsState } from "./LogsContext"
+import { Wireframe } from "../_common/Wireframe"
+import { logContext, LogsContext } from "./LogsContext"
+import { LogsList } from "./LogsList"
+import { LogsListGrouped } from "./LogsListGrouped"
+import { SearchBar } from "./SearchBar"
 
 export function Dashboard(initial: { id?: number }) {
   return (
     <Wireframe title="Painel">
-      <LogsState>
+      <LogsContext>
         <Content initialSelectedLog={initial.id} />
-      </LogsState>
+      </LogsContext>
     </Wireframe>
   )
 }
@@ -24,8 +25,15 @@ function Content({ initialSelectedLog = undefined as undefined | number }) {
   const data = useContext(logContext)
   React.useEffect(() => {
     console.log("initial", initialSelectedLog)
-    data.updateLogs("reset", initialSelectedLog).catch(showToastC("error"))
+    data.updateLogsGrouped()
+    if (initialSelectedLog) {
+      data.setSelectedLogById(initialSelectedLog)
+    }
+    // data.updateLogs("reset", initialSelectedLog).catch(showToastC("error"))
   }, [])
+  function groupedChange() {
+    data.setGrouped(!data.showGrouped)
+  }
 
   return (
     <div className="ui container">
@@ -36,10 +44,19 @@ function Content({ initialSelectedLog = undefined as undefined | number }) {
           justify-content: center;
         }
       `}</style>
-      <h1 className="ui header">Logs</h1>
+      <h1 className="ui header">
+        Logs
+        <Checkbox
+          label="Agrupado"
+          slider
+          checked={data.showGrouped}
+          onChange={groupedChange}
+          style={{ marginLeft: "30px" }}
+        />
+      </h1>
       <SearchBar />
       <div className="columns">
-        <LogsList />
+        {data.showGrouped ? <LogsListGrouped /> : <LogsList />}
         {data.selectedLog && <Detail />}
       </div>
     </div>

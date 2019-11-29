@@ -43,6 +43,17 @@ export interface LogListDTO {
   message?: string
 }
 
+export interface LogListGroupedDTO {
+  client?: ClientShortDTO
+  code?: string
+  count?: number
+  day?: number
+  logLevel?: "ERROR" | "WARN" | "INFO" | "DEBUG" | "TRACE"
+  message?: string
+  month?: number
+  year?: number
+}
+
 export interface ModelAndView {
   empty?: boolean
   model?: {}

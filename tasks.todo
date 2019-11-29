@@ -4,13 +4,13 @@
   ✔ filtros com "LIKE" não estão funcionando @done (28/11/2019 18:36:42)
   ☐ Agrupamento
   
+  ☐ textos da documentação, ocultar rotas que não interessam do swagger
   ☐ Validação
-  ☐ Limitar permissões de usuário pra um nível admin
+  ☐ validação de POST body
+  ☐ Índices
   ☐ fluxo de cadastro de novo usuário
   ☐ alteração de senha de usuário
-  ☐ validação de POST body
   ☐ formatação de erros da API
   ☐ testes de integração
-  ☐ textos da documentação, ocultar rotas que não interessam do swagger
-  ☐ Como ocultar erros na produção? (fora do escopo)
+  ☐ Limitar permissões de usuário pra um nível admin
   

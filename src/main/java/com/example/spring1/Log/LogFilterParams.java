@@ -9,4 +9,8 @@ public class LogFilterParams {
   public String message;
   public LocalDateTime createdAt_gt;
   public LocalDateTime createdAt_lt;
+
+  public Integer day;
+  public Integer month;
+  public Integer year;
 }

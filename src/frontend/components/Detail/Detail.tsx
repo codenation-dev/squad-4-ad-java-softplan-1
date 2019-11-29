@@ -52,7 +52,7 @@ export function Detail() {
       </Segment>
 
       <section>
-        <Header as="h3">Última ocorrência</Header>
+        <Header as="h3">Ocorrência</Header>
         <div className="content">{dayjs(selected.createdAt).format("DD/MM/YYYY hh:mm:ss")}</div>
       </section>
 

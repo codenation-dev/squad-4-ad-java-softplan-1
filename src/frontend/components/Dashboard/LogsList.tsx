@@ -111,6 +111,7 @@ export function LogsList() {
 function LogInfoCell(i: { log: LogListDTO }) {
   return (
     <>
+      <div>{i.log.code}</div>
       <div>{i.log.message}</div>
       <div>{i.log.client!.name}</div>
       <div>{dayjs(i.log.createdAt).format("DD/MM/YY hh:mm:ss")}</div>

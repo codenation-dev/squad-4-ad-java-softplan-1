@@ -1,4 +1,4 @@
-import { Input, Message, Form } from "semantic-ui-react"
+import { Input, Message, Form, Button } from "semantic-ui-react"
 import * as yup from "yup"
 import { Formik } from "formik"
 import Link from "next/link"
@@ -43,6 +43,7 @@ const formSchema = yup.object({
 
 function LoginForm() {
   const [error, setError] = useState("")
+  const [loading, setLoading] = useState(false)
   return (
     <Formik
       initialValues={{
@@ -51,11 +52,13 @@ function LoginForm() {
       }}
       onSubmit={async value => {
         try {
+          setLoading(true)
           await requester.authenticate({ username: value.username, password: value.password })
           console.log("login success")
           // Router.push("/dashboard")
           window.location.pathname = "/dashboard"
         } catch (err) {
+          setLoading(false)
           console.log(err)
           setError(formatError(err))
         }
@@ -81,9 +84,9 @@ function LoginForm() {
                 iconPosition="left"
                 icon="lock"
               />
-              <button className="ui large fluid button" type="submit" style={{ marginTop: "16px" }}>
+              <Button large fluid type="submit" style={{ marginTop: "16px" }} loading={loading}>
                 Entrar
-              </button>
+              </Button>
             </Form>
           </div>
         )

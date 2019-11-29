@@ -1,19 +1,15 @@
-import React, { useState } from "react"
-import { DropdownItemProps } from "semantic-ui-react"
-import { showToastC, showToast } from "../_common/ToastService"
-import { listClientsUsingGET } from "../_api/swagger/modules/ClientController"
-import { formatError } from "../_common/formatError"
-import { listLogsUsingGET } from "../_api/swagger/modules/LogController"
-import { LogListDTO } from "../_api/swagger/api-types"
 import Router from "next/router"
-import { createContext } from "react"
-
-interface Filters {
-  client?
-  level?
-  code?
-  description?
-}
+import React, { createContext } from "react"
+import { DropdownItemProps } from "semantic-ui-react"
+import { LogListDTO, LogListGroupedDTO } from "../_api/swagger/api-types"
+import { listClientsUsingGET } from "../_api/swagger/modules/ClientController"
+import {
+  listLogsUsingGET,
+  listLogsGroupedUsingGET,
+  getLogUsingGET
+} from "../_api/swagger/modules/LogController"
+import { formatError } from "../_common/formatError"
+import { showToast } from "../_common/ToastService"
 
 export interface SearchParams {
   selectedClient
@@ -23,9 +19,9 @@ export interface SearchParams {
   searchBy
 }
 
-export const logContext = createContext((null as any) as ReturnType<LogsState["getContext"]>)
+export const logContext = createContext((null as any) as ReturnType<LogsContext["getContext"]>)
 
-export class LogsState extends React.Component<{}, LogsState["state"]> {
+export class LogsContext extends React.Component<{}, LogsContext["state"]> {
   state = {
     searchParams: {
       selectedClient: "*",
@@ -34,7 +30,9 @@ export class LogsState extends React.Component<{}, LogsState["state"]> {
       searchBy: "*",
       text: ""
     },
+    showGrouped: true,
     logs: [] as (LogListDTO & { _selected?: boolean })[],
+    logsGrouped: [] as LogListGroupedDTO[],
     selectedLog: null as LogListDTO | null,
     globalError: "",
     logsPage: 0,
@@ -56,9 +54,13 @@ export class LogsState extends React.Component<{}, LogsState["state"]> {
       })
   }
 
-  setSearchParams = (i: LogsState["state"]["searchParams"]) => {
+  setSearchParams = (i: LogsContext["state"]["searchParams"]) => {
     this.setState({ searchParams: i })
-    this.updateLogs("reset")
+    if (this.state.logsGrouped) {
+      this.updateLogsGrouped()
+    } else {
+      this.updateLogs("reset")
+    }
   }
 
   setError = (s: string) => {
@@ -68,15 +70,14 @@ export class LogsState extends React.Component<{}, LogsState["state"]> {
   setSelectedLog = (log: LogListDTO | null) => {
     console.log("selected log", log)
     this.setState({ selectedLog: log })
-    const path = log ? `?id=${log.id}` : ""
-    Router.push("/dashboard" + path)
+    this._selectedLogRouterUpdate(log?.id)
   }
 
   setLogs = (logs: LogListDTO[]) => {
     this.setState({ logs })
   }
 
-  updateLogs = async (mode: "reset" | "paging", selectId?: number) => {
+  getUpdateParams = (mode: "reset" | "paging") => {
     const state = this.state
     const page = mode === "reset" ? 0 : state.logsPage + 1
     //filter
@@ -105,10 +106,16 @@ export class LogsState extends React.Component<{}, LogsState["state"]> {
       ...filter
     }
     console.log(params)
+    return params
+  }
+
+  updateLogs = async (mode: "reset" | "paging", selectId?: number) => {
+    const state = this.state
+    const params = this.getUpdateParams(mode)
 
     const out = await listLogsUsingGET(params)
 
-    const toSetLogsPage = out.pageable!.pageNumber! || page
+    const toSetLogsPage = out.pageable!.pageNumber! || params.pageNumber
     let toSetLogs = state.logs
     let toSetSelectedLog = state.selectedLog
     if (mode === "reset") {
@@ -122,11 +129,66 @@ export class LogsState extends React.Component<{}, LogsState["state"]> {
     } else if (mode === "paging") {
       toSetLogs = [...state.logs, ...(out.content || [])]
     }
-    this.setState({
-      logsPage: toSetLogsPage,
-      logs: toSetLogs,
-      selectedLog: toSetSelectedLog
+    return new Promise(resolve => {
+      this.setState(
+        {
+          logsPage: toSetLogsPage,
+          logs: toSetLogs,
+          selectedLog: toSetSelectedLog
+        },
+        resolve
+      )
     })
+  }
+
+  _selectedLogRouterUpdate = (id?: number) => {
+    const path = id ? `?id=${id}` : ""
+    Router.push("/dashboard" + path)
+  }
+
+  setSelectedLogById = async (selectId: number) => {
+    const currentList = this.state.logs
+    const found = currentList.find(x => x.id == selectId)
+    if (found) {
+      this.setState({ selectedLog: found })
+      this._selectedLogRouterUpdate(found.id)
+      return
+    }
+    try {
+      const getLog = await getLogUsingGET({ id: selectId })
+      this.setState({ selectedLog: getLog })
+      this._selectedLogRouterUpdate(getLog?.id)
+    } catch (err) {}
+  }
+
+  updateLogsGrouped = async () => {
+    const params = this.getUpdateParams("reset")
+    const out = await listLogsGroupedUsingGET(params)
+    this.setState({
+      logsGrouped: out
+    })
+  }
+
+  setSelectedLogGrouped = async (log: LogListGroupedDTO | null) => {
+    if (!log) {
+      this.setState({ selectedLog: null })
+      return
+    }
+    const params = this.getUpdateParams("reset")
+    const { content: list } = await listLogsUsingGET({
+      ...params,
+      day: log.day,
+      month: log.month,
+      year: log.year
+    })
+    const found = (list || [])[0]
+    this.setState({ selectedLog: found })
+    this._selectedLogRouterUpdate(found?.id)
+  }
+
+  setGrouped = (toSet: boolean) => {
+    this.setState({ showGrouped: toSet })
+    this.updateLogs("reset")
   }
 
   getContext = () => {
@@ -135,7 +197,11 @@ export class LogsState extends React.Component<{}, LogsState["state"]> {
       setSearchParams: this.setSearchParams,
       setError: this.setError,
       updateLogs: this.updateLogs,
+      updateLogsGrouped: this.updateLogsGrouped,
       setSelectedLog: this.setSelectedLog,
+      setSelectedLogGrouped: this.setSelectedLogGrouped,
+      setSelectedLogById: this.setSelectedLogById,
+      setGrouped: this.setGrouped,
       setLogs: this.setLogs
     }
   }

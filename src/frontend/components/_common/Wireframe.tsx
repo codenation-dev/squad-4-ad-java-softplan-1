@@ -64,7 +64,6 @@ const WireframeInner: React.SFC<{ username }> = i => {
                 <Link href="/settings">
                   <Dropdown.Item>Clientes</Dropdown.Item>
                 </Link>
-                <Dropdown.Item>Opções</Dropdown.Item>
                 <Divider></Divider>
                 <Dropdown.Item>Sair</Dropdown.Item>
               </Dropdown.Menu>
