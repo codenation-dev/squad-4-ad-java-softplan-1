@@ -1,9 +1,7 @@
 package com.example.spring1.User;
 
 import com.example.spring1.User.dto.UserDetailDTO;
-import com.example.spring1.User.dto.UserListDTO;
 import com.example.spring1.User.dto.UserPatchDTO;
-import java.util.List;
 import lombok.AllArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,11 +17,10 @@ public class UserController {
   private final UserService userService;
 
   // fixme: permissões devem ser limitadas
-  @GetMapping
-  List<UserListDTO> list() {
-    return userService.listUsers();
-  }
-
+  // @GetMapping
+  // List<UserListDTO> list() {
+  //   return userService.listUsers();
+  // }
   @GetMapping("/self")
   UserDetailDTO self(Authentication auth) {
     User user = (User) auth.getPrincipal();

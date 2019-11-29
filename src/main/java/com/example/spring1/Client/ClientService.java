@@ -2,6 +2,7 @@ package com.example.spring1.Client;
 
 import com.example.spring1._Common.MapperService;
 import com.example.spring1.Client.dto.ClientCreateDTO;
+import com.example.spring1.Client.dto.ClientDetailDTO;
 import com.example.spring1.Client.dto.ClientShortDTO;
 import com.example.spring1.User.User;
 import java.util.List;
@@ -17,11 +18,12 @@ public class ClientService {
   private final ClientRepository clientRepository;
   private final MapperService mapperService;
 
-  Client create(ClientCreateDTO client) {
+  ClientDetailDTO create(ClientCreateDTO client) {
     Client toCreate = new Client();
     toCreate.setName(client.getName());
     toCreate.setApiToken(UUID.randomUUID().toString());
-    return clientRepository.save(toCreate);
+    Client model = clientRepository.save(toCreate);
+    return mapperService.getMapper().map(model, ClientDetailDTO.class);
   }
 
   Client patch(Client client) {
@@ -45,14 +47,14 @@ public class ClientService {
     return generated;
   }
 
-  List<ClientShortDTO> list(User user) {
+  List<ClientDetailDTO> list(User user) {
     ModelMapper mapper = mapperService.getMapper();
     List<Client> clients = this.clientRepository.findByUsers_Id(user.getId());
     return clients
       .stream()
       .map(
         client -> {
-          return mapper.map(client, ClientShortDTO.class);
+          return mapper.map(client, ClientDetailDTO.class);
         }
       )
       .collect(Collectors.toList());
