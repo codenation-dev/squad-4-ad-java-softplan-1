@@ -1,5 +1,6 @@
 package com.example.spring1._Config;
 
+import com.example.spring1._Common.Exceptions.NotFoundException;
 import com.example.spring1.User.User;
 import com.example.spring1.User.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,6 +43,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
       .userDetailsService(
         username -> {
           User found = repository.getByUsername(username);
+          if (found == null) {
+            throw new NotFoundException("Não foi possível autenticar com as informações passadas.");
+          }
           return found;
         }
       )

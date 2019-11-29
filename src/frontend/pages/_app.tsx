@@ -5,6 +5,7 @@ import "../components/_api/requester"
 import "../components/Dashboard/Dashboard.scss"
 import "../components/Settings/Settings.scss"
 import "../components/Dashboard/SearchBar.scss"
+import "../components/_common/ToastService"
 
 class MyApp extends App {
   // Only uncomment this method if you have blocking data requirements for

@@ -5,16 +5,16 @@
   ✔ Agrupamento @done (11/29/2019, 2:16:28 PM)
   ✔ ocultar rotas que não interessam do swagger @done (11/29/2019, 2:16:30 PM)
   
-  ☐ textos da documentação
+  ✔ textos da documentação @done (29/11/2019 20:25:08)
   ✔ Validação @done (29/11/2019 19:37:09)
   ✔ validação de POST body @done (29/11/2019 20:00:38)
   ✔ Índices @done (29/11/2019 20:00:42)
-  ☐ fluxo de cadastro de novo usuário
+  ✔ fluxo de cadastro de novo usuário @done (29/11/2019 21:49:47)
   ☐ alteração de senha de usuário
   ☐ formatação de erros da API
   ☐ Deletar logs
 
 Não vai acontecer:
   ☐ testes de integração
-  ☐ Limitar permissões de usuário pra um nível admin
+  ☐ Rotas de controle de usuário que pedem um segundo nível de permissões
   

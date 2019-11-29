@@ -4,6 +4,7 @@ import { Dropdown, Divider, Menu } from "semantic-ui-react"
 import { UserDetailDTO } from "../_api/swagger/api-types"
 import { selfUsingGET } from "../_api/swagger/modules/Users"
 import Link from "next/link"
+import { requester } from "../_api/requester"
 
 const initialUserContext = {
   user: {
@@ -65,7 +66,13 @@ const WireframeInner: React.SFC<{ username }> = i => {
                   <Dropdown.Item>Clientes</Dropdown.Item>
                 </Link>
                 <Divider></Divider>
-                <Dropdown.Item>Sair</Dropdown.Item>
+                <Dropdown.Item
+                  onClick={() => {
+                    requester.clearToken()
+                  }}
+                >
+                  Sair
+                </Dropdown.Item>
               </Dropdown.Menu>
             </Dropdown>
             {/* <div className="item">

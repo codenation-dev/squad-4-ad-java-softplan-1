@@ -42,11 +42,11 @@ export function SearchBar() {
           selection
           search
           options={data.clients}
-          {...h.bindInputSemantic("selectedClient")}
+          {...h.bindInputDropdown("selectedClient")}
         />
       </div>
       <div className="item">
-        <Dropdown selection options={SORTBY_OPTIONS} {...h.bindInputSemantic("sortBy")} />
+        <Dropdown selection options={SORTBY_OPTIONS} {...h.bindInputDropdown("sortBy")} />
       </div>
 
       <div className="item _grow">
@@ -65,7 +65,7 @@ export function SearchBar() {
               name="logLevel"
               options={LOGLEVEL_OPTIONS}
               className="_grow _noBorder right"
-              {...h.bindInputSemantic("logLevel")}
+              {...h.bindInputDropdown("logLevel")}
             />
           )}
           <Dropdown
@@ -73,7 +73,7 @@ export function SearchBar() {
             name="searchBy"
             options={SEARCHBY_OPTIONS}
             style={{ minWidth: "100px" }}
-            {...h.bindInputSemantic("searchBy")}
+            {...h.bindInputDropdown("searchBy")}
           />
           <Button type="submit" icon="search"></Button>
         </Input>

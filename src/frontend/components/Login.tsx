@@ -1,13 +1,12 @@
-import { Input, Message, Form, Button } from "semantic-ui-react"
-import * as yup from "yup"
 import { Formik } from "formik"
-import Link from "next/link"
-import { FormHelper } from "./_common/FormHelper"
-import { requester } from "./_api/requester"
-import { useState } from "react"
-import { formatError } from "./_common/formatError"
-import Router from "next/router"
 import Head from "next/head"
+import Link from "next/link"
+import { useState } from "react"
+import { Button, Form, Message } from "semantic-ui-react"
+import * as yup from "yup"
+import { requester } from "./_api/requester"
+import { formatError } from "./_common/formatError"
+import { FormHelper } from "./_common/FormHelper"
 
 export function Login() {
   return (

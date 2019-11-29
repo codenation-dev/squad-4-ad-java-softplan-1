@@ -23,7 +23,7 @@ export class FormHelper<Values extends {}> {
     }
   }
 
-  bindInputSemantic(field: keyof Values) {
+  bindInputDropdown(field: keyof Values) {
     return {
       name: field,
       id: field,

@@ -57,10 +57,13 @@ class RestRequester extends SwaggerRequester {
     operation: IOperation
   ) {
     console.log("handler", request, input)
-    const token = this.getSavedAuth()?.access_token
-    if (!token) {
-      this.clearToken()
-      throw Error("Não autenticado.")
+    var token
+    if (!input._noAuth) {
+      token = this.getSavedAuth()?.access_token
+      if (!token) {
+        this.clearToken()
+        throw Error("Não autenticado.")
+      }
     }
     const url = new URL(BACKEND_URL + request.url)
     const params = Object.assign({}, request.query || {}, input._extraQueryParams || {})
@@ -108,6 +111,7 @@ declare global {
   namespace GApiCommon {
     interface MergeToRequest {
       _extraQueryParams?: Record<string, any>
+      _noAuth?: boolean
     }
   }
 }
