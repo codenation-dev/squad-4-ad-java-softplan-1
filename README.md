@@ -28,7 +28,7 @@ A primeira execução cria um usuário administrador com username=`adm` e senha=
 
 ## Enviando logs
 
-  - Utilizar a rota `/collectors/submit-log` conforme consta no swagger. Esta rota é pública.
+  - Utilizar a rota `/collectors/submit-log` conforme consta no swagger. Esta rota é pública. Obter o API Token dos clientes na tela de configuração, acessível no canto superior direito da tela.
 
 ## Instalação frontend
 
