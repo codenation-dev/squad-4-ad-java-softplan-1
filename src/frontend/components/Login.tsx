@@ -2,7 +2,7 @@ import { Formik } from "formik"
 import Head from "next/head"
 import Link from "next/link"
 import { useState } from "react"
-import { Button, Form, Message } from "semantic-ui-react"
+import { Button, Form, Message, Image } from "semantic-ui-react"
 import * as yup from "yup"
 import { requester } from "./_api/requester"
 import { formatError } from "./_common/formatError"
@@ -16,7 +16,10 @@ export function Login() {
       </Head>
       <div className="ui middle aligned grid" style={{ height: "100vh", justifyContent: "center" }}>
         <div className="column" style={{ maxWidth: "450px" }}>
-          <h2 className="ui center aligned header">Login</h2>
+          <h2 className="ui center aligned header">
+            aceleralog
+            <Image src="static/aceleralog.png" />
+          </h2>
           <LoginForm />
           <div className="ui basic segment">
             <Link href="/signup">
