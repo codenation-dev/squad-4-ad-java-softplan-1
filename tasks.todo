@@ -10,7 +10,7 @@
   ✔ validação de POST body @done (29/11/2019 20:00:38)
   ✔ Índices @done (29/11/2019 20:00:42)
   ✔ fluxo de cadastro de novo usuário @done (29/11/2019 21:49:47)
-  ☐ alteração de senha de usuário
+  ✔ alteração de senha de usuário @done (29/11/2019 22:33:49)
   ☐ formatação de erros da API
   ☐ Deletar logs
 

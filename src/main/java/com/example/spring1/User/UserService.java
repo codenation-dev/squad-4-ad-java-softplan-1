@@ -40,15 +40,16 @@ public class UserService {
     return out;
   }
 
-  void patchUser(User user, UserPatchDTO input) {
+  void patchUser(User _user, UserPatchDTO input) {
+    User user = userRepository.getOne(_user.getId());
     if (input.getClients() != null) {
       List<Client> clients = clientRepository.findAllById(input.getClients());
       user.setClients(clients);
     }
-    if (input.getDisplayName() != null) {
+    if (input.getDisplayName() != null && input.getDisplayName().length() > 0) {
       user.setDisplayName(input.getDisplayName());
     }
-    if (input.getPassword() != null) {
+    if (input.getPassword() != null && input.getPassword().length() > 0) {
       String encoded = passwordEncoder.encode(input.getPassword());
       user.setPassword(encoded);
     }

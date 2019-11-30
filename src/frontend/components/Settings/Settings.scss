@@ -9,6 +9,10 @@
   ._columns {
     display: flex;
     flex-direction: row;
+
+    @media (max-width: 650px) {
+      flex-wrap: wrap;
+    }
   }
 
   ._list,
@@ -28,4 +32,21 @@
 
 ._clients {
   margin-top: 14px;
+  margin-right: 14px;
+  flex-grow: 2;
+}
+
+._userSettings {
+  margin-top: 14px;
+  margin-left: 14px;
+  flex-grow: 1;
+}
+
+@media (max-width: 650px) {
+  ._clients,
+  ._userSettings {
+    margin-bottom: 30px;
+    margin-left: 0;
+    margin-right: 0;
+  }
 }
