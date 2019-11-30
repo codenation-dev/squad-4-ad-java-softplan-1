@@ -4,7 +4,8 @@ Aplicativo de registro de logs, à la [Sentry](https://sentry.io/welcome/). OK, 
 
 - API REST feita com Spring Boot
 - Frontend feito com next.js (react/typescript)
-- Exemplo em [aceleralog.now.sh](https://aceleralog.now.sh)
+- Frontend em [aceleralog.now.sh](https://aceleralog.now.sh)
+- Backend/swagger em https://aceleralog-api.herokuapp.com/swagger-ui.html
 
 ## Instalação backend
 
@@ -24,6 +25,10 @@ A primeira execução cria um usuário administrador com username=`adm` e senha=
 
 - Tabs com 2 espaços
 - Formatação com format on save + prettier + prettier-plugin-java (não obrigatório porque ainda é complicado configurar em alguns editores)
+
+## Enviando logs
+
+  - Utilizar a rota `/collectors/submit-log` conforme consta no swagger. Esta rota é pública.
 
 ## Instalação frontend
 
