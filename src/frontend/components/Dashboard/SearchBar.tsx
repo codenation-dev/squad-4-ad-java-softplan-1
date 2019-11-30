@@ -30,6 +30,11 @@ export function SearchBar() {
 
   const h = new FormHelper(bag)
 
+  let sortByOptions = SORTBY_OPTIONS
+  if (!data.isGrouped) {
+    sortByOptions = sortByOptions.filter(x => !x.key.startsWith("count"))
+  }
+
   return (
     <form
       id="search-form"
@@ -46,7 +51,7 @@ export function SearchBar() {
         />
       </div>
       <div className="item">
-        <Dropdown selection options={SORTBY_OPTIONS} {...h.bindInputDropdown("sortBy")} />
+        <Dropdown selection options={sortByOptions} {...h.bindInputDropdown("sortBy")} />
       </div>
 
       <div className="item _grow">

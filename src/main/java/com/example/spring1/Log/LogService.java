@@ -78,10 +78,35 @@ public class LogService {
   }
 
   private void applySort(JPAQuery<?> query, Pageable pageable) {
+    QLog l = QLog.log;
     pageable
       .getSort()
       .forEach(
         sort -> {
+          if (sort.getProperty().equals("createdAt")) {
+            if (!sort.isAscending()) {
+              query.orderBy(
+                l.createdAt.year().asc(),
+                l.createdAt.month().asc(),
+                l.createdAt.dayOfMonth().asc()
+              );
+            } else {
+              query.orderBy(
+                l.createdAt.year().desc(),
+                l.createdAt.month().desc(),
+                l.createdAt.dayOfMonth().desc()
+              );
+            }
+          }
+
+          if (sort.getProperty().equals("count")) {
+            if (!sort.isAscending()) {
+              query.orderBy(l.id.count().asc());
+            } else {
+              query.orderBy(l.id.count().desc());
+            }
+          }
+
           this.sortPaths.forEach(
               path -> {
                 PathMetadata meta = ((Path<?>) path).getMetadata();
@@ -197,7 +222,6 @@ public class LogService {
     paths.add(l.logLevel);
     paths.add(l.code);
     paths.add(l.message);
-    paths.add(l.createdAt);
     this.sortPaths = paths;
   }
 }

@@ -33,7 +33,7 @@ function Content({ initialSelectedLog = undefined as undefined | number }) {
     // data.updateLogs("reset", initialSelectedLog).catch(showToastC("error"))
   }, [])
   function groupedChange() {
-    data.setGrouped(!data.showGrouped)
+    data.setGrouped(!data.isGrouped)
   }
 
   return (
@@ -43,14 +43,14 @@ function Content({ initialSelectedLog = undefined as undefined | number }) {
         <Checkbox
           label="Agrupado"
           slider
-          checked={data.showGrouped}
+          checked={data.isGrouped}
           onChange={groupedChange}
           style={{ marginLeft: "30px" }}
         />
       </h1>
       <SearchBar />
       <div className={classNames("columns", data.selectedLog && "with-detail")}>
-        {data.showGrouped ? <LogsListGrouped /> : <LogsList />}
+        {data.isGrouped ? <LogsListGrouped /> : <LogsList />}
         {data.selectedLog && <Detail />}
       </div>
     </div>

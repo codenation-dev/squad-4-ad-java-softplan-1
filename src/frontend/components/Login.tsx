@@ -55,6 +55,7 @@ function LoginForm() {
       onSubmit={async value => {
         try {
           setLoading(true)
+          localStorage.clear()
           await requester.authenticate({ username: value.username, password: value.password })
           console.log("login success")
           // Router.push("/dashboard")

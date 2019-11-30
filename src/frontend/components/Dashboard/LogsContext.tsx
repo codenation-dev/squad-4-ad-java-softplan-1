@@ -30,7 +30,7 @@ export class LogsContext extends React.Component<{}, LogsContext["state"]> {
       searchBy: "*",
       text: ""
     },
-    showGrouped: true,
+    isGrouped: true,
     logs: [] as (LogListDTO & { _selected?: boolean })[],
     logsGrouped: [] as LogListGroupedDTO[],
     selectedLog: null as LogListDTO | null,
@@ -56,7 +56,7 @@ export class LogsContext extends React.Component<{}, LogsContext["state"]> {
 
   setSearchParams = (i: LogsContext["state"]["searchParams"]) => {
     this.setState({ searchParams: i })
-    if (this.state.logsGrouped) {
+    if (this.state.isGrouped) {
       this.updateLogsGrouped()
     } else {
       this.updateLogs("reset")
@@ -176,10 +176,13 @@ export class LogsContext extends React.Component<{}, LogsContext["state"]> {
     }
     const params = this.getUpdateParams("reset")
     const { content: list } = await listLogsUsingGET({
-      ...params,
+      logLevel: log.logLevel,
+      code: log.code,
+      message: log.message,
       day: log.day,
       month: log.month,
-      year: log.year
+      year: log.year,
+      clientId: log.client?.id
     })
     const found = (list || [])[0]
     this.setState({ selectedLog: found })
@@ -187,7 +190,7 @@ export class LogsContext extends React.Component<{}, LogsContext["state"]> {
   }
 
   setGrouped = (toSet: boolean) => {
-    this.setState({ showGrouped: toSet })
+    this.setState({ isGrouped: toSet })
     this.updateLogs("reset")
   }
 
