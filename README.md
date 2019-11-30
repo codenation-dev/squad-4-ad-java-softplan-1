@@ -32,5 +32,6 @@ A primeira execução cria um usuário administrador com username=`adm` e senha=
 
 ## Instalação frontend
 
+- Frontend na pasta `src/frontend`. Ele tem um readme próprio com mais alguns detalhes.
 - Executar `npm i` ou `yarn` dentro da pasta /frontend
 - `npm run dev` ou `yarn dev` para exexutar o servidor de desenvolvimento (porta 3000)
