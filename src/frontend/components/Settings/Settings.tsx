@@ -3,6 +3,7 @@ import { Header, Image } from "semantic-ui-react"
 import { userContext, Wireframe } from "../_common/Wireframe"
 import "./Settings.scss"
 import { ClientList } from "./ClientList"
+import { UserSettingsColumn } from "./UserSettingsColumn"
 
 export function Settings() {
   return (
@@ -35,8 +36,4 @@ function Content() {
       </section>
     </div>
   )
-}
-
-function UserSettingsColumn() {
-  return null
 }
